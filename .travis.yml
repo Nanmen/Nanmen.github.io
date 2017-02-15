@@ -19,7 +19,7 @@ before_script:
   _config.yml
 install:
 - npm install
-- git push --force --quiet "https://${REPO_TOKEN}@${GitHub_REF}"master:gh-pages > /dev/null2>&1
+- git push --force --quiet "https://${REPO_TOKEN}@${GitHub_REF}"master:gh-pages
 script:
 - hexo clean
 - hexo generate
