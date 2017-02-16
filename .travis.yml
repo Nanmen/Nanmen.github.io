@@ -22,11 +22,5 @@ install:
 script:
 - hexo clean
 - hexo generate
-after_script:
-- git init
-- git add .
-- git commit -m "Update docs"
-- git pull "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
-- git push -f "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
 after_success:
 - hexo deploy
