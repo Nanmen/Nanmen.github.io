@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 在路上 - 逍遥叹
 subtitle:
-description:
-author: John Doe
-language:
-timezone:
+description: 人生何处不相逢
+author: 南门
+language: zh-Hans
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -28,7 +28,7 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
@@ -40,7 +40,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
 
 # Category & Tag
@@ -62,9 +62,32 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+plugin:
+- hexo-generator-feed
+#Feed Atom
+feed:
+type: atom
+path: atom.xml
+limit: 20
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
+#search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+#sitemap
+sitemap:
+    path: sitemap.xml
+#duoshuo_shortname:
+duoshuo_shortname: nanmen
+duoshuo_share: true
+duoshuo_hotartical: true
+#baidu_analytics
+baidu_analytics: 0ce623223acb02f06e255552f19ea9de
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
