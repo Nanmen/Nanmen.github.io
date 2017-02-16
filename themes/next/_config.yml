@@ -501,8 +501,5 @@ css: css
 js: js
 images: images
 
-#tjdedx
-rss: /atom.xml
-
 # Theme version
 version: 5.1.0
