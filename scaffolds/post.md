@@ -1,6 +1,6 @@
 ---
 title: {{ title }}
 date: {{ date }}
-categories:
-tags:
+type: "categories"
+comments: false
 ---
