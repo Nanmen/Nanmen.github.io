@@ -82,12 +82,6 @@ search:
 #sitemap
 sitemap:
     path: sitemap.xml
-#duoshuo_shortname:
-duoshuo_shortname: nanmen
-duoshuo_share: true
-duoshuo_hotartical: true
-#baidu_analytics
-baidu_analytics: 0ce623223acb02f06e255552f19ea9de
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
