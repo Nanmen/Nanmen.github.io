@@ -274,6 +274,7 @@ baidu_analytics: 0ce623223acb02f06e255552f19ea9de
 # Duoshuo ShortName
 duoshuo_shortname: nanmen
 
+
 # Disqus
 #disqus_shortname:
 
@@ -332,8 +333,8 @@ duoshuo_hotartical: true
 duoshuo_info:
   ua_enable: true
   admin_enable: false
-  user_id: 0
-  #admin_nickname: Author
+  user_id: 6387533375963399000
+  admin_nickname: 南
 
 
 # Facebook SDK Support.
@@ -500,6 +501,7 @@ vendors:
 css: css
 js: js
 images: images
+since: 2017
 
 # Theme version
 version: 5.1.0
