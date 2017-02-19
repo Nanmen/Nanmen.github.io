@@ -95,5 +95,6 @@ abbrlink:
 
 deploy:
   type: git
-  repo: git@github.com:Nanmen/Nanmen.github.io.git #github仓库地址
-  branch: master # github分支
+  repo: 
+      github: git@github.com:Nanmen/Nanmen.github.io.git,master
+      coding: git@git.coding.net:SKeep/nanmen.github.io.git,master
