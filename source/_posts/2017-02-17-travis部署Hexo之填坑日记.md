@@ -4,6 +4,7 @@ categories: Hexo
 tags:
   - hexo
 comments: true
+abbrlink: a8653e18
 date: 2017-02-17 16:34:46
 ---
 
@@ -13,7 +14,7 @@ date: 2017-02-17 16:34:46
 也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。
 
 ### 第一个坑 travis 找不指定文件
-
+<!--more--> 
 ``` bash
 $ cd 博客项目文件夹根目录
 $ touch .travis.yml

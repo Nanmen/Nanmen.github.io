@@ -2,6 +2,8 @@
 User-agent: *
 Allow: /
 Allow: /archives/
+Allow: /V1/
+Allow: /V1/index.html
 
 Disallow: /vendors/
 Disallow: /js/
