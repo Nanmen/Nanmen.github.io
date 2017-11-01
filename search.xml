@@ -1,34 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   
+  
+    
+    <entry>
+      <title><![CDATA[新的开始]]></title>
+      <url>http://ymjava.cn/archives/b585e161.html</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[异常随记]]></title>
+      <url>http://ymjava.cn/archives/3979fffb.html</url>
+      <content type="html"></content>
+      
+        
+    </entry>
     
     <entry>
       <title><![CDATA[Let's Encrypt证书使用]]></title>
-      <url>%2Farchives%2Fec1907ff.html</url>
-      <content type="text"><![CDATA[Let’s Encrypt证书使用 certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。 设置yum代码库 certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other 12341.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo2.mv CentOS6-Base-163.repo /etc/yum.repos.d/3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm4.rpm -ivh epel-release-latest-6.noarch.rpm 修改CentOS6-Base-163.repo文件，将$releasever替换为6修改epel.repo文件，将$releasever替换为6，将http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel运行以下命令生成缓存 12yum clean allyum makecache 安装git软件，也可直接从https://github.com/certbot/certbot下载1yum install git 防火墙修改修改/etc/sysconfig/iptables1vim /etc/sysconfig/iptables 查看是否有80、443端口允许访问记录12-A INPUT -i eth0 -p tcp -m tcp --dport 80 -j ACCEPT-A INPUT -i eth0 -p tcp -m tcp --dport 443 -j ACCEPT 获取Let’s Encrypt证书certbot-auto运行是会自动连接下载依赖包，执行过程出现问题具体分析原因12git clone https://github.com/certbot/certbotcd certbot certbot-auto命令在root用户下执行，certbot-auto会执行更新certbot版本和安装依赖包，执行需要联网，有时较慢1./certbot-auto certonly --standalone --email 你的邮箱 -d 你的域名 生成的证书放在/etc/letsencrypt/live/[网站域名]下，证书有效期3个月 文件名 内容 cert.pem 服务端证书 chain.pem 浏览器需要的所有证书但不包括服务端证书，比如根证书和中间证书 fullchain.pem 包括了cert.pem和chain.pem的内容 privkey.pem 证书的私钥 Apache 设置Apache测试版本 12Server version: Apache/2.4.6 (CentOS)Server built: Nov 14 2016 18:04:44 修改/etc/httpd/conf.d/ssl.conf12345678Listen 443 https&lt;VirtualHost _default_:443&gt;Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"SSLEngine onSSLCertificateFile /etc/letsencrypt/live/域名/cert.pemSSLCertificateKeyFile /etc/letsencrypt/live/域名/privkey.pemSSLCertificateChainFile /etc/letsencrypt/live/域名/fullchain.pem&lt;/VirtualHost&gt; HSTS（HTTP Strict Transport Security）的作用是强制客户端（如浏览器）使用HTTPS与服务器创建连接。 Tomcat设置123cp /etc/letsencrypt/live/域名/*.pem apache-tomcat-8.5.5/conf/cd apache-tomcat-8.5.5/conf/chown 用户:组 *.pem 修改conf/server.xml文件： 12345678910&lt;Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" maxThreads="150" SSLEnabled="true" &gt; &lt;UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" /&gt; &lt;SSLHostConfig&gt; &lt;Certificate certificateKeyFile="conf/privkey.pem" certificateFile="conf/cert.pem" certificateChainFile="conf/fullchain.pem" type="RSA" /&gt; &lt;/SSLHostConfig&gt;&lt;/Connector&gt; Nginx设置修改nginx的配置文件/usr/local/nginx/conf/nginx.conf，实现https转到内网tomcat的http服务，注：以下配置未实现tomcat识别来自https的请求，详细见问题3 1234567891011121314151617181920server &#123; listen 8443; server_name localhost; ssl on; ssl_certificate /etc/letsencrypt/live/域名/fullchain.pem; ssl_certificate_key /etc/letsencrypt/live/域名/privkey.pem; server_name_in_redirect off; proxy_set_header Host $host:$server_port; proxy_connect_timeout 60s; proxy_read_timeout 5400s; proxy_send_timeout 5400s; proxy_set_header X-Real-IP $remote_addr; proxy_set_header REMOTE-HOST $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; index index.html index.htm index.jsp index.do; location ^~ /ZhsqApp/&#123; proxy_pass http://192.168.100.10:8080; client_max_body_size 100m; &#125; &#125; Weblogic 配置weblogic必须是10.3.6及以上版本，才能使用Let’s Encrypt的证书，Let’s Encrypt采用SHA256withRSA，低版本的不支持SHA256withRSA 生成密钥库执行openssl命令生成fullchain_and_key.p12，执行keytool命令生成密钥库文件weblogic.jks 12openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out fullchain_and_key.p12 -name weblogic -passout pass:123456keytool -importkeystore -deststorepass 123456 -destkeystore weblogic.jks -srckeystore fullchain_and_key.p12 -srcstoretype PKCS12 -srcstorepass 123456 -alias weblogic privkey.pem、fullchain.pem为Let’s Encrypt生成文件，密码可自行修改。注-name与-alias别名保存一致，-passout参数的pass:需保留。-passout与-srcstorepass密码保持一致， -deststorepass需记住在weblogic配置使用。 生成信任库执行keytool命令生成信任库文件trust.jks1keytool -importcert -alias rootCA -trustcacerts -file cert.pem -keystore trust.jks -storepass 123456 cert.pem为Let’s Encrypt生成文件，密码可自行修改。 -storepass需记住在weblogic配置使用。 weblogic配置启用SSL监听端口登录weblogic控制台 -&gt; 服务器 -&gt; 选择服务器管理 -&gt; 配置标签 -&gt; 一般信息子标签页 -&gt; 启用 SSL 监听端口 -&gt; 修改端口7002 -&gt; 保存 在Linux下设置端口小于1024的，需要使用管理员用户启动weblogic。 密钥库配置进入配置标签 -&gt; 密钥库标签页 1.密钥库点更改，选择定制标识和定制信任，点击保存。2.定制标识密钥库，填写weblogic.jks全路径定制标识密钥库类型，填写jks3.定制标识密钥库密码短语，填写生成密钥库时 -deststorepass写的密码4.确认定制标识密钥库密码短语，填写生成密钥库时 -deststorepass写的密码5.定制信任密钥库，填写trust.jks全路径6.定制信任密钥库类型，填写jks7.定制信任密钥库密码短语，填写生成信任库时 -storepass写的密码8.确认定制信任密钥库密码短语，填写生成信任库时 -storepass写的密码 SSL配置进入配置标签 -&gt; SSL标签页 1.私有密钥别名，填写生成密钥库时的别名2.私有密钥密码短语，填写生成密钥库时 -deststorepass写的密码3.确认私有密钥密码短语，填写生成密钥库时 -deststorepass写的密码点击保存 weblogic 10.3. 6 版本还需要做额外配置，SSL标签页中，点击高级，选中使用 JSSE SSL，点击保存 重启weblogic服务，测试https访问。 更新证书1./certbot-auto renew 更新证书之后，需要执行tomcat、weblogic对应配置内容。 问题问题1、Let’s Encrypt安装好之后在PC端可以正常访问，但在手机端提示不受信任的主要原因是缺少中级证书。生成的LE证书后使用的需要使用fullchain.pem，打开后会发现有两段证书，第一段是LE的证书，第二段才是你网站的证书。而你只有网站的证书，而没有LE的证书。 问题2、如何关闭SSL3协议查看http://disablessl3.com如何关闭apache、nginx的ssl3协议tomcat修改，修改server.xml, 123&lt;Connector port=&quot;8443&quot; protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot; maxThreads=&quot;150&quot; SSLEnabled=&quot;true&quot; sslProtocol=&quot;TLS&quot; sslEnabledProtocols=&quot;TLSv1,TLSv1.1,TLSv1.2&quot; &gt; 问题3、nginx采用Let’s Encrypt证书，如何实现https转http，后端识别来自https的请求1.修改nginx的配置文件修改nginx的配置文件/usr/local/nginx/conf/nginx.conf，实现https转到内网tomcat的http服务，注：以下配置未实现tomcat识别来自https的请求，详细见问题2 1234567891011121314151617181920212223server &#123; listen 8443; server_name localhost; ssl on; ssl_certificate /etc/letsencrypt/live/域名/fullchain.pem; ssl_certificate_key /etc/letsencrypt/live/域名/privkey.pem; server_name_in_redirect off; proxy_set_header Host $host:$server_port; proxy_connect_timeout 60s; proxy_read_timeout 5400s; proxy_send_timeout 5400s; proxy_set_header X-Real-IP $remote_addr; proxy_set_header REMOTE-HOST $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme; proxy_set_header WL-Proxy-SSL true; add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; &quot;; index index.html index.htm index.jsp index.do; location ^~ /ZhsqApp/&#123; proxy_pass http://192.168.100.10:8080; client_max_body_size 100m; &#125; &#125; 主要增加3处配置： proxy_set_header X-Forwarded-Proto $scheme; tomcat可识别参数proxy_set_header WL-Proxy-SSL true; weblogic可识别参数add_header Strict-Transport-Security “max-age=63072000; includeSubdomains; “; 启用HSTS功能，浏览器在63072000秒时间内默认以https请求服务 2.tomcat启用识别X-Forwarded-Proto设置修改配置文件server.xml，在Engine下添加下面内容 123&lt;Valve className=&quot;org.apache.catalina.valves.RemoteIpValve&quot; remoteIpHeader=&quot;X-Forwarded-For&quot; protocolHeader=&quot;X-Forwarded-Proto&quot; protocolHeaderHttpsValue=&quot;https&quot;/&gt; 做好上述配置，重启tomcat。request.getScheme()的值显示https另外，可参考Nginx SSL+tomcat集群,request.getScheme() 取到https正确的协议内容 3.weblogic启用识别WL-Proxy-SSL 设置进入console界面，域名-&gt;配置-&gt;Web应用程序，勾选启用 WebLogic 插件，保存 做好上述配置，重启weblogic。request.getScheme()的值显示https另外，可参考HTTPS/SSL/Spring Security doesn’t work in both a load balancer and non-load balancer environment #424内容]]></content>
+      <url>http://ymjava.cn/archives/ec1907ff.html</url>
+      <content type="html"><![CDATA[<h2 id="Let’s-Encrypt证书使用"><a href="#Let’s-Encrypt证书使用" class="headerlink" title="Let’s Encrypt证书使用"></a><center>Let’s Encrypt证书使用<center></center></center></h2><blockquote>
+<p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
+</blockquote>
+<h3 id="设置yum代码库"><a href="#设置yum代码库" class="headerlink" title="设置yum代码库"></a>设置yum代码库</h3><ul>
+<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other" target="_blank" rel="external">http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo</div><div class="line">2.mv CentOS6-Base-163.repo /etc/yum.repos.d/</div><div class="line">3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm</div><div class="line">4.rpm -ivh epel-release-latest-6.noarch.rpm</div></pre></td></tr></table></figure>
+<p>修改CentOS6-Base-163.repo文件，将$releasever替换为6<br>修改epel.repo文件，将$releasever替换为6，将<a href="http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel" target="_blank" rel="external">http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel</a><br>运行以下命令生成缓存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+<p>安装git软件，也可直接从<a href="https://github.com/certbot/certbot下载" target="_blank" rel="external">https://github.com/certbot/certbot下载</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install git</div></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<h3 id="防火墙修改"><a href="#防火墙修改" class="headerlink" title="防火墙修改"></a>防火墙修改</h3><p>修改/etc/sysconfig/iptables<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/sysconfig/iptables</div></pre></td></tr></table></figure></p>
+<p>查看是否有80、443端口允许访问记录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-A INPUT -i eth0 -p tcp -m tcp --dport 80 -j ACCEPT</div><div class="line">-A INPUT -i eth0 -p tcp -m tcp --dport 443 -j ACCEPT</div></pre></td></tr></table></figure></p>
+<h3 id="获取Let’s-Encrypt证书"><a href="#获取Let’s-Encrypt证书" class="headerlink" title="获取Let’s Encrypt证书"></a>获取Let’s Encrypt证书</h3><p>certbot-auto运行是会自动连接下载依赖包，执行过程出现问题具体分析原因<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/certbot/certbot</div><div class="line"><span class="built_in">cd</span> certbot</div></pre></td></tr></table></figure></p>
+<p>certbot-auto命令在root用户下执行，certbot-auto会执行更新certbot版本和安装依赖包，执行需要联网，有时较慢<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./certbot-auto certonly --standalone --email 你的邮箱 <span class="_">-d</span> 你的域名</div></pre></td></tr></table></figure></p>
+<p>生成的证书放在/etc/letsencrypt/live/[网站域名]下，证书有效期3个月</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cert.pem</td>
+<td>服务端证书</td>
+</tr>
+<tr>
+<td>chain.pem</td>
+<td>浏览器需要的所有证书但不包括服务端证书，比如根证书和中间证书</td>
+</tr>
+<tr>
+<td>fullchain.pem</td>
+<td>包括了cert.pem和chain.pem的内容</td>
+</tr>
+<tr>
+<td>privkey.pem</td>
+<td>证书的私钥</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Apache-设置"><a href="#Apache-设置" class="headerlink" title="Apache 设置"></a>Apache 设置</h3><p>Apache测试版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server version: Apache/2.4.6 (CentOS)</div><div class="line">Server built:   Nov 14 2016 18:04:44</div></pre></td></tr></table></figure>
+<p>修改/etc/httpd/conf.d/ssl.conf<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Listen 443 https</div><div class="line">&lt;VirtualHost _default_:443&gt;</div><div class="line">Header always <span class="built_in">set</span> Strict-Transport-Security <span class="string">"max-age=63072000; includeSubdomains; preload"</span></div><div class="line">SSLEngine on</div><div class="line">SSLCertificateFile /etc/letsencrypt/live/域名/cert.pem</div><div class="line">SSLCertificateKeyFile /etc/letsencrypt/live/域名/privkey.pem</div><div class="line">SSLCertificateChainFile /etc/letsencrypt/live/域名/fullchain.pem</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
+<p>HSTS（HTTP Strict Transport Security）的作用是强制客户端（如浏览器）使用HTTPS与服务器创建连接。</p>
+<h3 id="Tomcat设置"><a href="#Tomcat设置" class="headerlink" title="Tomcat设置"></a>Tomcat设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp /etc/letsencrypt/live/域名/*.pem apache-tomcat-8.5.5/conf/</div><div class="line"><span class="built_in">cd</span> apache-tomcat-8.5.5/conf/</div><div class="line">chown 用户:组 *.pem</div></pre></td></tr></table></figure>
+<p>修改conf/server.xml文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;Connector port=<span class="string">"8443"</span> protocol=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span></div><div class="line">           maxThreads=<span class="string">"150"</span> SSLEnabled=<span class="string">"true"</span> &gt;</div><div class="line">    &lt;UpgradeProtocol className=<span class="string">"org.apache.coyote.http2.Http2Protocol"</span> /&gt;</div><div class="line">    &lt;SSLHostConfig&gt;</div><div class="line">        &lt;Certificate certificateKeyFile=<span class="string">"conf/privkey.pem"</span></div><div class="line">                     certificateFile=<span class="string">"conf/cert.pem"</span></div><div class="line">                     certificateChainFile=<span class="string">"conf/fullchain.pem"</span></div><div class="line">                     <span class="built_in">type</span>=<span class="string">"RSA"</span> /&gt;</div><div class="line">    &lt;/SSLHostConfig&gt;</div><div class="line">&lt;/Connector&gt;</div></pre></td></tr></table></figure>
+<h3 id="Nginx设置"><a href="#Nginx设置" class="headerlink" title="Nginx设置"></a>Nginx设置</h3><p>修改nginx的配置文件/usr/local/nginx/conf/nginx.conf，实现https转到内网tomcat的http服务，注：以下配置未实现tomcat识别来自https的请求，详细见问题3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">     listen 8443;</div><div class="line">     server_name localhost;</div><div class="line">     ssl on;</div><div class="line">     ssl_certificate /etc/letsencrypt/live/域名/fullchain.pem;</div><div class="line">     ssl_certificate_key /etc/letsencrypt/live/域名/privkey.pem;</div><div class="line">     server_name_in_redirect off;</div><div class="line">     proxy_set_header Host $host:$server_port;</div><div class="line">     proxy_connect_timeout 60s;</div><div class="line">     proxy_read_timeout 5400s;</div><div class="line">     proxy_send_timeout 5400s;</div><div class="line">     proxy_set_header X-Real-IP $remote_addr;</div><div class="line">     proxy_set_header REMOTE-HOST $remote_addr;</div><div class="line">     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">     index index.html index.htm index.jsp index.do;</div><div class="line">     location ^~ /ZhsqApp/&#123;</div><div class="line">         proxy_pass  http://192.168.100.10:8080;</div><div class="line">         client_max_body_size    100m;</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="Weblogic-配置"><a href="#Weblogic-配置" class="headerlink" title="Weblogic 配置"></a>Weblogic 配置</h3><p>weblogic必须是10.3.6及以上版本，才能使用Let’s Encrypt的证书，Let’s Encrypt采用SHA256withRSA，低版本的不支持SHA256withRSA</p>
+<h3 id="生成密钥库"><a href="#生成密钥库" class="headerlink" title="生成密钥库"></a>生成密钥库</h3><p>执行openssl命令生成fullchain_and_key.p12，执行keytool命令生成密钥库文件weblogic.jks</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out fullchain_and_key.p12 -name weblogic -passout pass:123456</div><div class="line">keytool -importkeystore -deststorepass 123456   -destkeystore weblogic.jks -srckeystore fullchain_and_key.p12 -srcstoretype PKCS12 -srcstorepass 123456  -alias weblogic</div></pre></td></tr></table></figure>
+<p>privkey.pem、fullchain.pem为Let’s Encrypt生成文件，密码可自行修改。注-name与-alias别名保存一致，-passout参数的pass:需保留。-passout与-srcstorepass密码保持一致， -deststorepass需记住在weblogic配置使用。</p>
+<h3 id="生成信任库"><a href="#生成信任库" class="headerlink" title="生成信任库"></a>生成信任库</h3><p>执行keytool命令生成信任库文件trust.jks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -importcert -alias rootCA -trustcacerts -file cert.pem -keystore trust.jks -storepass 123456</div></pre></td></tr></table></figure></p>
+<p>cert.pem为Let’s Encrypt生成文件，密码可自行修改。 -storepass需记住在weblogic配置使用。</p>
+<h3 id="weblogic配置"><a href="#weblogic配置" class="headerlink" title="weblogic配置"></a>weblogic配置</h3><h4 id="启用SSL监听端口"><a href="#启用SSL监听端口" class="headerlink" title="启用SSL监听端口"></a>启用SSL监听端口</h4><p>登录weblogic控制台 -&gt; 服务器 -&gt; 选择服务器管理 -&gt; 配置标签 -&gt; 一般信息子标签页 -&gt; 启用 SSL 监听端口 -&gt; 修改端口7002 -&gt; 保存</p>
+<p>在Linux下设置端口小于1024的，需要使用管理员用户启动weblogic。</p>
+<p><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/64659649.png" alt=""></p>
+<h4 id="密钥库配置"><a href="#密钥库配置" class="headerlink" title="密钥库配置"></a>密钥库配置</h4><p>进入配置标签 -&gt; 密钥库标签页</p>
+<p>1.密钥库点更改，选择定制标识和定制信任，点击保存。<br>2.定制标识密钥库，填写weblogic.jks全路径<br>定制标识密钥库类型，填写jks<br>3.定制标识密钥库密码短语，填写生成密钥库时 -deststorepass写的密码<br>4.确认定制标识密钥库密码短语，填写生成密钥库时 -deststorepass写的密码<br>5.定制信任密钥库，填写trust.jks全路径<br>6.定制信任密钥库类型，填写jks<br>7.定制信任密钥库密码短语，填写生成信任库时 -storepass写的密码<br>8.确认定制信任密钥库密码短语，填写生成信任库时 -storepass写的密码</p>
+<p><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65091944.png" alt=""></p>
+<h4 id="SSL配置"><a href="#SSL配置" class="headerlink" title="SSL配置"></a>SSL配置</h4><p>进入配置标签 -&gt; SSL标签页</p>
+<p>1.私有密钥别名，填写生成密钥库时的别名<br>2.私有密钥密码短语，填写生成密钥库时 -deststorepass写的密码<br>3.确认私有密钥密码短语，填写生成密钥库时 -deststorepass写的密码<br>点击保存</p>
+<p><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65673128.png" alt=""></p>
+<p>weblogic 10.3. 6 版本还需要做额外配置，SSL标签页中，点击高级，选中使用 JSSE SSL，点击保存</p>
+<p><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65716484.png" alt=""></p>
+<p>重启weblogic服务，测试https访问。</p>
+<h3 id="更新证书"><a href="#更新证书" class="headerlink" title="更新证书"></a>更新证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./certbot-auto renew</div></pre></td></tr></table></figure>
+<p>更新证书之后，需要执行tomcat、weblogic对应配置内容。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><h4 id="问题1、Let’s-Encrypt安装好之后在PC端可以正常访问，但在手机端提示不受信任的"><a href="#问题1、Let’s-Encrypt安装好之后在PC端可以正常访问，但在手机端提示不受信任的" class="headerlink" title="问题1、Let’s Encrypt安装好之后在PC端可以正常访问，但在手机端提示不受信任的"></a>问题1、Let’s Encrypt安装好之后在PC端可以正常访问，但在手机端提示不受信任的</h4><p>主要原因是缺少中级证书。生成的LE证书后使用的需要使用fullchain.pem，打开后会发现有两段证书，第一段是LE的证书，第二段才是你网站的证书。而你只有网站的证书，而没有LE的证书。</p>
+<h4 id="问题2、如何关闭SSL3协议"><a href="#问题2、如何关闭SSL3协议" class="headerlink" title="问题2、如何关闭SSL3协议"></a>问题2、如何关闭SSL3协议</h4><p>查看<a href="http://disablessl3.com如何关闭apache、nginx的ssl3协议" target="_blank" rel="external">http://disablessl3.com如何关闭apache、nginx的ssl3协议</a><br>tomcat修改，修改server.xml,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Connector port=&quot;8443&quot; protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;</div><div class="line">               maxThreads=&quot;150&quot; SSLEnabled=&quot;true&quot;</div><div class="line">               sslProtocol=&quot;TLS&quot; sslEnabledProtocols=&quot;TLSv1,TLSv1.1,TLSv1.2&quot;  &gt;</div></pre></td></tr></table></figure>
+<h4 id="问题3、nginx采用Let’s-Encrypt证书，如何实现https转http，后端识别来自https的请求"><a href="#问题3、nginx采用Let’s-Encrypt证书，如何实现https转http，后端识别来自https的请求" class="headerlink" title="问题3、nginx采用Let’s Encrypt证书，如何实现https转http，后端识别来自https的请求"></a>问题3、nginx采用Let’s Encrypt证书，如何实现https转http，后端识别来自https的请求</h4><p>1.修改nginx的配置文件<br>修改nginx的配置文件/usr/local/nginx/conf/nginx.conf，实现https转到内网tomcat的http服务，注：以下配置未实现tomcat识别来自https的请求，详细见问题2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 8443;</div><div class="line">    server_name localhost;</div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/letsencrypt/live/域名/fullchain.pem;</div><div class="line">    ssl_certificate_key /etc/letsencrypt/live/域名/privkey.pem;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    proxy_set_header Host $host:$server_port;</div><div class="line">    proxy_connect_timeout 60s;</div><div class="line">    proxy_read_timeout 5400s;</div><div class="line">    proxy_send_timeout 5400s;</div><div class="line">    proxy_set_header X-Real-IP $remote_addr;</div><div class="line">    proxy_set_header REMOTE-HOST $remote_addr;</div><div class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">              proxy_set_header X-Forwarded-Proto  $scheme;</div><div class="line">              proxy_set_header WL-Proxy-SSL true;</div><div class="line">              add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains;   &quot;;</div><div class="line">    index index.html index.htm index.jsp index.do;</div><div class="line">    location ^~ /ZhsqApp/&#123;</div><div class="line">        proxy_pass  http://192.168.100.10:8080;</div><div class="line">        client_max_body_size    100m;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>主要增加3处配置：</p>
+<blockquote>
+<p>proxy_set_header X-Forwarded-Proto  $scheme; tomcat可识别参数<br>proxy_set_header WL-Proxy-SSL true; weblogic可识别参数<br>add_header Strict-Transport-Security “max-age=63072000; includeSubdomains; “; 启用HSTS功能，浏览器在63072000秒时间内默认以https请求服务</p>
+</blockquote>
+<p>2.tomcat启用识别X-Forwarded-Proto设置<br>修改配置文件server.xml，在Engine下添加下面内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Valve className=&quot;org.apache.catalina.valves.RemoteIpValve&quot;   remoteIpHeader=&quot;X-Forwarded-For&quot;</div><div class="line">           protocolHeader=&quot;X-Forwarded-Proto&quot;</div><div class="line">           protocolHeaderHttpsValue=&quot;https&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>做好上述配置，重启tomcat。request.getScheme()的值显示https<br>另外，可参考Nginx SSL+tomcat集群,request.getScheme() 取到https正确的协议内容</p>
+<p>3.weblogic启用识别WL-Proxy-SSL 设置<br>进入console界面，域名-&gt;配置-&gt;Web应用程序，勾选启用 WebLogic 插件，保存</p>
+<p><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65317389.png" alt=""><br><img src="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65382741.png" alt=""></p>
+<p>做好上述配置，重启weblogic。request.getScheme()的值显示https<br>另外，可参考HTTPS/SSL/Spring Security doesn’t work in both a load balancer and non-load balancer environment #424内容</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术随记 </category>
+            
+        </categories>
+        
+        
     </entry>
-
     
     <entry>
       <title><![CDATA[spring ioc 控制反转]]></title>
-      <url>%2Farchives%2F50de3585.html</url>
-      <content type="text"><![CDATA[Spring – IOCspring ioc 控制反转IOC（Inversion of Control）控制反转：本来是由应用程序管理的对象之间的依赖关系，现在交给了容器管理，这就叫控制反转，即交给了IOC容器，Spring的IOC容器主要使用DI方式实现的。不需要主动查找，对象的查找、定位和创建全部由容器管理。 通俗点说就是不创建对象。以前我们要调用一个对象的方法，首先要new一个对象。但使用IOC容器，在代码中不直接与对象连接，而是在配置文件中描述要使用哪一个对象。容器负责将这些联系在一起。 实现方法IOC容器的对象实例化是通过配置文件来实现的。术语上这叫做注入。注入有两种形式，采用构造方法注入和采用setter注入。具体的注入形式如下 采用set方法注入，给属性添加一个set方法，并对其进行赋值1234567891011publicclass UserManagerImplimplements UserManager &#123; private UserDaouserDao; publicvoid setUserDao(UserDao userDao) &#123; this.userDao = userDao; &#125;&#125; 配置文件：12345&lt;beanid="userManager"class="com.bjpowernode.spring.manager.UserManagerImpl"&gt; &lt;propertyname="userDao"ref="usrDao4Oracle"/&gt; &lt;/bean&gt; set注入特点： 与传统的JavaBean的写法更相似，程序员更容易理解、接受，通过setter方式设定依赖关系显得更加直观、明显； 对于复杂的依赖关系，如果采用构造注入，会导致构造器过于臃肿，难以阅读。Spring在创建Bean实例时，需要同时实例化其依赖的全部实例，因而导致死你功能下降。而使用设置注入，则避免这下问题； 尤其在某些属性可选的情况下，多参数的构造器更加笨拙。 采用构造方法注入，在构造方法中对属性进行赋值12345678publicclass UserManagerImplimplements UserManager &#123; private UserDaouserDao; public UserManagerImpl(UserDao userDao) &#123; this.userDao = userDao; &#125;&#125; 配置文件：12345&lt;beanid="userManager"class="com.bjpowernode.spring.manager.UserManagerImpl"&gt; &lt;constructor-argref="userDao4Mysql"/&gt;&lt;/bean&gt; 构造方法注入特点： 构造注入可以在构造器中决定依赖关系的注入顺序，优先依赖的优先注入。 对于依赖关系无须变化的Bean，构造注入更有用处；因为没有setter方法，所有的依赖关系全部在构造器内设定，因此，不用担心后续代码对依赖关系的破坏。 依赖关系只能在构造器中设定，则只有组件的创建者才能改变组件的依赖关系。对组件的调用者而言，组件内部的依赖关系完全透明，更符合高内聚的原则；]]></content>
-    </entry>
+      <url>http://ymjava.cn/archives/50de3585.html</url>
+      <content type="html"><![CDATA[<h2 id="Spring-–-IOC"><a href="#Spring-–-IOC" class="headerlink" title="Spring – IOC"></a><center>Spring – IOC<center></center></center></h2><h3 id="spring-ioc-控制反转"><a href="#spring-ioc-控制反转" class="headerlink" title="spring ioc 控制反转"></a>spring ioc 控制反转</h3><pre><code>IOC（Inversion of Control）控制反转：本来是由应用程序管理的对象之间的依赖关系，现在交给了容器管理，这就叫控制反转，即交给了IOC容器，Spring的IOC容器主要使用DI方式实现的。不需要主动查找，对象的查找、定位和创建全部由容器管理。
 
+通俗点说就是不创建对象。以前我们要调用一个对象的方法，首先要new一个对象。但使用IOC容器，在代码中不直接与对象连接，而是在配置文件中描述要使用哪一个对象。容器负责将这些联系在一起。
+</code></pre><h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><pre><code>IOC容器的对象实例化是通过配置文件来实现的。术语上这叫做注入。注入有两种形式，采用构造方法注入和采用setter注入。具体的注入形式如下
+</code></pre><a id="more"></a> 
+<p>采用set方法注入，给属性添加一个set方法，并对其进行赋值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">publicclass UserManagerImplimplements UserManager &#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> UserDaouserDao;</div><div class="line"></div><div class="line">    <span class="function">publicvoid <span class="title">setUserDao</span><span class="params">(UserDao userDao)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.userDao = userDao;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="配置文件："><a href="#配置文件：" class="headerlink" title="配置文件："></a>配置文件：</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;beanid="userManager"class="com.bjpowernode.spring.manager.UserManagerImpl"&gt;</div><div class="line"></div><div class="line">     &lt;propertyname="userDao"ref="usrDao4Oracle"/&gt;</div><div class="line"></div><div class="line">  &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<p>set注入特点：</p>
+<pre><code> 与传统的JavaBean的写法更相似，程序员更容易理解、接受，通过setter方式设定依赖关系显得更加直观、明显；
+
+ 对于复杂的依赖关系，如果采用构造注入，会导致构造器过于臃肿，难以阅读。Spring在创建Bean实例时，需要同时实例化其依赖的全部实例，因而导致死你功能下降。而使用设置注入，则避免这下问题；
+
+尤其在某些属性可选的情况下，多参数的构造器更加笨拙。
+</code></pre><p>采用构造方法注入，在构造方法中对属性进行赋值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">publicclass UserManagerImplimplements UserManager &#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> UserDaouserDao;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserManagerImpl</span><span class="params">(UserDao userDao)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.userDao = userDao;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置文件：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;beanid="userManager"class="com.bjpowernode.spring.manager.UserManagerImpl"&gt;</div><div class="line"></div><div class="line">    &lt;constructor-argref="userDao4Mysql"/&gt;</div><div class="line"></div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>构造方法注入特点：</p>
+<pre><code> 构造注入可以在构造器中决定依赖关系的注入顺序，优先依赖的优先注入。
+
+ 对于依赖关系无须变化的Bean，构造注入更有用处；因为没有setter方法，所有的依赖关系全部在构造器内设定，因此，不用担心后续代码对依赖关系的破坏。
+依赖关系只能在构造器中设定，则只有组件的创建者才能改变组件的依赖关系。对组件的调用者而言，组件内部的依赖关系完全透明，更符合高内聚的原则；
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> java学习之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> IOC（Inversion of Control）控制反转 </tag>
+            
+        </tags>
+        
+    </entry>
     
     <entry>
       <title><![CDATA[js学习之promise]]></title>
-      <url>%2Farchives%2Ffddbb00f.html</url>
-      <content type="text"><![CDATA[js学习之promisePromise的初步认识我们之前在完成异步执行都是利用的回调函数去实现的，例如ajax的调用：12345678910111213141516171819202122var request = new XMLHttpRequest(); // 新建XMLHttpRequest对象request.onreadystatechange = function () &#123; // 状态发生变化时，函数被回调 if (request.readyState === 4) &#123; // 成功完成 // 判断响应结果: if (request.status === 200) &#123; // 成功，通过responseText拿到响应的文本: return success(request.responseText); &#125; else &#123; // 失败，根据响应码判断失败原因: return fail(request.status); &#125; &#125; else &#123; // HTTP请求还在继续... &#125;&#125;// 发送请求:request.open('GET', '/api/categories');request.send();alert('请求已发送，请等待响应...'); 当然我们可以封装起来，改成另外的写法：123var ajax = ajaxGet('http://...');ajax.ifSuccess(success) .ifFail(fail); 但是我们从ES6后我们有了新的写法 12345new Promise(test).then(function (result) &#123; console.log('成功：' + result);&#125;).catch(function (reason) &#123; console.log('失败：' + reason);&#125;); 当然这只是简单的promise的利用，进阶版本请看参考链接。 参考链接&gt;1.Promise - 廖雪峰的官方网站2.[翻译] We have a problem with promises - FEX3.JavaScript Promise迷你书（中文版） 前方的路很长，还需努力啊]]></content>
+      <url>http://ymjava.cn/archives/fddbb00f.html</url>
+      <content type="html"><![CDATA[<h2 id="js学习之promise"><a href="#js学习之promise" class="headerlink" title="js学习之promise"></a><center>js学习之promise<center></center></center></h2><h3 id="Promise的初步认识"><a href="#Promise的初步认识" class="headerlink" title="Promise的初步认识"></a>Promise的初步认识</h3><p>我们之前在完成异步执行都是利用的回调函数去实现的，例如ajax的调用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest(); <span class="comment">// 新建XMLHttpRequest对象</span></div><div class="line"></div><div class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 状态发生变化时，函数被回调</span></div><div class="line">    <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123; <span class="comment">// 成功完成</span></div><div class="line">        <span class="comment">// 判断响应结果:</span></div><div class="line">        <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</div><div class="line">            <span class="comment">// 成功，通过responseText拿到响应的文本:</span></div><div class="line">            <span class="keyword">return</span> success(request.responseText);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// 失败，根据响应码判断失败原因:</span></div><div class="line">            <span class="keyword">return</span> fail(request.status);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// HTTP请求还在继续...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 发送请求:</span></div><div class="line">request.open(<span class="string">'GET'</span>, <span class="string">'/api/categories'</span>);</div><div class="line">request.send();</div><div class="line"></div><div class="line">alert(<span class="string">'请求已发送，请等待响应...'</span>);</div></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<p>当然我们可以封装起来，改成另外的写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ajax = ajaxGet(<span class="string">'http://...'</span>);</div><div class="line">ajax.ifSuccess(success)</div><div class="line">    .ifFail(fail);</div></pre></td></tr></table></figure></p>
+<p>但是我们从ES6后我们有了新的写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(test).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'成功：'</span> + result);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'失败：'</span> + reason);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>当然这只是简单的promise的利用，进阶版本请看参考链接。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>&gt;<br>1.<a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014345008539155e93fc16046d4bb7854943814c4f9dc2000" target="_blank" rel="external">Promise - 廖雪峰的官方网站</a><br>2.<a href="http://fex.baidu.com/blog/2015/07/we-have-a-problem-with-promises/" target="_blank" rel="external">[翻译] We have a problem with promises - FEX</a><br>3.<a href="http://liubin.org/promises-book/" target="_blank" rel="external">JavaScript Promise迷你书（中文版）</a></p>
+<hr>
+<h3 id="前方的路很长，还需努力啊"><a href="#前方的路很长，还需努力啊" class="headerlink" title="前方的路很长，还需努力啊"></a>前方的路很长，还需努力啊</h3>]]></content>
+      
+        <categories>
+            
+            <category> js学习之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> js </tag>
+            
+            <tag> nodejs </tag>
+            
+        </tags>
+        
     </entry>
-
     
     <entry>
       <title><![CDATA[travis部署Hexo之填坑日记]]></title>
-      <url>%2Farchives%2Fa8653e18.html</url>
-      <content type="text"><![CDATA[这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。 也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。 第一个坑 travis 找不指定文件 12$ cd 博客项目文件夹根目录$ touch .travis.yml 登录 travis12travis login --auto` 123# 这里的 REPO_TOKEN 是变量名,在后面的配置文件中会用到# TOKEN 是上面github生成的Tokentravis encrypt 'REPO_TOKEN=&lt;TOKEN&gt;' --add 这在很多讲解Travis部署Hexo的教程中都有的步骤，那么问题就出现了。。。。 travis 找不到指定文件 这里是在travis encrypt 你的github创建的token的时候出现的。 解决办法： 在travis encrypt ‘REPO_TOKEN=‘ –add 的时候加上 -r 你的github用户民/你的repo名。比如我的就是 1travis encrypt 'REPO_TOKEN=&lt;TOKEN&gt;' --add -r Nanmen/nanmen.github.io 第二个坑 travis 构建你的工程时报2&gt; dev/null错的问题 当我兴高采烈的去推送到我的dev分支的时候，travis 运行测试过程中报出个 ‘\ 2&gt;dev/null’ 的错误，一脸懵有没有，明明都是按照教程来的，怎么会是这样的呢。在我前后回想之后，一不小心测试出来了。。。。 解决办法： 在你执行travis encrypt 的时候，并不是跟大部分教程写的那样，应该执行这一句1travis encrypt REPO_TOKEN=TOKEN --add -r Nanmen/nanmen.github.io 参考资料1.手把手教从零开始在GitHub上使用Hexo搭建博客教程(一)-附GitHub注册及配置 - 简书 2.手把手教从零开始在GitHub上使用Hexo搭建博客教程(四)-使用Travis自动部署Hex… - 简书 3.hexo教程系列——使用Travis自动部署hexo - 张学志の博客 - 博客频道 - CSDN.NET]]></content>
+      <url>http://ymjava.cn/archives/a8653e18.html</url>
+      <content type="html"><![CDATA[<p>这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。</p>
+<p>也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。</p>
+<h3 id="第一个坑-travis-找不指定文件"><a href="#第一个坑-travis-找不指定文件" class="headerlink" title="第一个坑 travis 找不指定文件"></a>第一个坑 travis 找不指定文件</h3><a id="more"></a> 
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> 博客项目文件夹根目录</div><div class="line">$ touch .travis.yml</div></pre></td></tr></table></figure>
+<ul>
+<li>登录 travis<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div><div class="line">`</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这里的 REPO_TOKEN 是变量名,在后面的配置文件中会用到</span></div><div class="line"><span class="comment"># TOKEN 是上面github生成的Token</span></div><div class="line">travis encrypt <span class="string">'REPO_TOKEN=&lt;TOKEN&gt;'</span> --add</div></pre></td></tr></table></figure>
+<p>这在很多讲解Travis部署Hexo的教程中都有的步骤，那么问题就出现了。。。。</p>
+<ul>
+<li>travis 找不到指定文件</li>
+</ul>
+<p>这里是在travis encrypt 你的github创建的token的时候出现的。</p>
+<p>解决办法： 在travis encrypt ‘REPO_TOKEN=<token>‘ –add 的时候加上 -r 你的github用户民/你的repo名。比如我的就是</token></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis encrypt <span class="string">'REPO_TOKEN=&lt;TOKEN&gt;'</span> --add -r Nanmen/nanmen.github.io</div></pre></td></tr></table></figure>
+<h3 id="第二个坑-travis-构建你的工程时报2-gt-dev-null错的问题"><a href="#第二个坑-travis-构建你的工程时报2-gt-dev-null错的问题" class="headerlink" title="第二个坑 travis 构建你的工程时报2&gt; dev/null错的问题"></a>第二个坑 travis 构建你的工程时报2&gt; dev/null错的问题</h3><ul>
+<li>当我兴高采烈的去推送到我的dev分支的时候，travis 运行测试过程中报出个 ‘\<token> 2&gt;dev/null’ 的错误，一脸懵有没有，明明都是按照教程来的，怎么会是这样的呢。在我前后回想之后，一不小心测试出来了。。。。</token></li>
+</ul>
+<p>解决办法： 在你执行travis encrypt 的时候，并不是跟大部分教程写的那样，应该执行这一句<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis encrypt REPO_TOKEN=TOKEN --add -r Nanmen/nanmen.github.io</div></pre></td></tr></table></figure></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.<a href="http://www.jianshu.com/p/f4cc5866946b" target="_blank" rel="external">手把手教从零开始在GitHub上使用Hexo搭建博客教程(一)-附GitHub注册及配置 - 简书</a><br>  2.<a href="http://www.jianshu.com/p/fff7b3384f46" target="_blank" rel="external">手把手教从零开始在GitHub上使用Hexo搭建博客教程(四)-使用Travis自动部署Hex… - 简书</a><br>  3.<a href="http://blog.csdn.net/xuezhisdc/article/details/53130423" target="_blank" rel="external">hexo教程系列——使用Travis自动部署hexo - 张学志の博客 - 博客频道 - CSDN.NET</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Hexo </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
     </entry>
-
     
   
   

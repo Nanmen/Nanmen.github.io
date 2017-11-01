@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-06-08T05:37:50.511Z</updated>
+  <updated>2017-11-01T04:48:10.148Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -16,11 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>新的开始</title>
+    <link href="http://ymjava.cn/archives/b585e161.html"/>
+    <id>http://ymjava.cn/archives/b585e161.html</id>
+    <published>2017-11-01T04:48:10.000Z</published>
+    <updated>2017-11-01T04:48:10.148Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>异常随记</title>
+    <link href="http://ymjava.cn/archives/3979fffb.html"/>
+    <id>http://ymjava.cn/archives/3979fffb.html</id>
+    <published>2017-06-16T03:01:24.000Z</published>
+    <updated>2017-06-16T03:01:24.221Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Let&#39;s Encrypt证书使用</title>
     <link href="http://ymjava.cn/archives/ec1907ff.html"/>
     <id>http://ymjava.cn/archives/ec1907ff.html</id>
     <published>2017-06-08T02:55:52.000Z</published>
-    <updated>2017-06-08T05:37:50.511Z</updated>
+    <updated>2017-06-08T05:37:50.512Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Let’s-Encrypt证书使用"><a href="#Let’s-Encrypt证书使用" class="headerlink" title="Let’s Encrypt证书使用"></a><center>Let’s Encrypt证书使用<center></center></center></h2><blockquote>
 <p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
@@ -135,7 +163,7 @@
     <link href="http://ymjava.cn/archives/50de3585.html"/>
     <id>http://ymjava.cn/archives/50de3585.html</id>
     <published>2017-03-04T13:15:00.000Z</published>
-    <updated>2017-03-12T08:22:45.876Z</updated>
+    <updated>2017-03-12T08:22:45.877Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Spring-–-IOC"><a href="#Spring-–-IOC" class="headerlink" title="Spring – IOC"></a><center>Spring – IOC<center></center></center></h2><h3 id="spring-ioc-控制反转"><a href="#spring-ioc-控制反转" class="headerlink" title="spring ioc 控制反转"></a>spring ioc 控制反转</h3><pre><code>IOC（Inversion of Control）控制反转：本来是由应用程序管理的对象之间的依赖关系，现在交给了容器管理，这就叫控制反转，即交给了IOC容器，Spring的IOC容器主要使用DI方式实现的。不需要主动查找，对象的查找、定位和创建全部由容器管理。
 
@@ -183,7 +211,7 @@
     <link href="http://ymjava.cn/archives/fddbb00f.html"/>
     <id>http://ymjava.cn/archives/fddbb00f.html</id>
     <published>2017-02-21T11:01:28.000Z</published>
-    <updated>2017-02-22T02:02:09.420Z</updated>
+    <updated>2017-02-22T02:02:09.421Z</updated>
     
     <content type="html"><![CDATA[<h2 id="js学习之promise"><a href="#js学习之promise" class="headerlink" title="js学习之promise"></a><center>js学习之promise<center></center></center></h2><h3 id="Promise的初步认识"><a href="#Promise的初步认识" class="headerlink" title="Promise的初步认识"></a>Promise的初步认识</h3><p>我们之前在完成异步执行都是利用的回调函数去实现的，例如ajax的调用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest(); <span class="comment">// 新建XMLHttpRequest对象</span></div><div class="line"></div><div class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 状态发生变化时，函数被回调</span></div><div class="line">    <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123; <span class="comment">// 成功完成</span></div><div class="line">        <span class="comment">// 判断响应结果:</span></div><div class="line">        <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</div><div class="line">            <span class="comment">// 成功，通过responseText拿到响应的文本:</span></div><div class="line">            <span class="keyword">return</span> success(request.responseText);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// 失败，根据响应码判断失败原因:</span></div><div class="line">            <span class="keyword">return</span> fail(request.status);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// HTTP请求还在继续...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 发送请求:</span></div><div class="line">request.open(<span class="string">'GET'</span>, <span class="string">'/api/categories'</span>);</div><div class="line">request.send();</div><div class="line"></div><div class="line">alert(<span class="string">'请求已发送，请等待响应...'</span>);</div></pre></td></tr></table></figure></p>
 <a id="more"></a> 
@@ -215,7 +243,7 @@
     <link href="http://ymjava.cn/archives/a8653e18.html"/>
     <id>http://ymjava.cn/archives/a8653e18.html</id>
     <published>2017-02-17T08:34:46.000Z</published>
-    <updated>2017-02-19T06:58:40.927Z</updated>
+    <updated>2017-02-19T06:58:40.928Z</updated>
     
     <content type="html"><![CDATA[<p>这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。</p>
 <p>也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。</p>
