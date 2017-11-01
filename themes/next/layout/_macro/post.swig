@@ -311,7 +311,7 @@
       {% endif %}
     </div>
 
-	<div align="center">
+	<!-- <div align="center">
 	{% if not is_index %}
     <div class="copyright">
     <p><span>
@@ -319,7 +319,7 @@
     </span></p>
     </div>
 	{% endif %}
-	</div>
+	</div> -->
 
   <div>
   {% if not is_index %}
