@@ -48,7 +48,7 @@
     <link href="http://ymjava.cn/archives/ec1907ff.html"/>
     <id>http://ymjava.cn/archives/ec1907ff.html</id>
     <published>2017-06-08T02:55:52.000Z</published>
-    <updated>2017-06-08T05:37:50.512Z</updated>
+    <updated>2017-11-01T07:25:34.455Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Let’s-Encrypt证书使用"><a href="#Let’s-Encrypt证书使用" class="headerlink" title="Let’s Encrypt证书使用"></a><center>Let’s Encrypt证书使用<center></center></center></h2><blockquote>
 <p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
