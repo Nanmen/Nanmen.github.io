@@ -253,7 +253,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night bright
+highlight_theme: night eighties
 
 
 # ---------------------------------------------------------------
@@ -387,7 +387,7 @@ busuanzi_count:
   site_pv_header: 本站总访问量
   site_pv_footer: 次
   # custom pv span for one page only
-  page_pv: true
+  page_pv: false
   page_pv_header: 本文总阅读量
   page_pv_footer: 次
 
@@ -443,7 +443,7 @@ use_motion: true
 fancybox: true
 
 # Canvas-nest
-canvas_nest: false
+canvas_nest: true
 
 # Script Vendors.
 # Set a CDN address for the vendor you want to customize.
@@ -494,7 +494,7 @@ vendors:
 
   # Internal version: 1.0.0
   # https://github.com/hustcc/canvas-nest.js
-  canvas_nest:
+  #canvas_nest: true
 
 
 
@@ -506,13 +506,6 @@ since: 2017
 
 # Theme version
 version: 5.1.0
-
-# --------------------------------------------------------------
-# background settings
-# --------------------------------------------------------------
-# add canvas-nest effect
-# see detail from https://github.com/hustcc/canvas-nest.js
-canvas_nest: true
 
 
 # 文章末尾添加“本文结束”标记
