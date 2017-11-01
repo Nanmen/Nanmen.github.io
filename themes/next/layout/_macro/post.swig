@@ -301,6 +301,12 @@
 
     <div>
       {% if not is_index %}
+        {% include 'my-copyright.swig' %}
+      {% endif %}
+    </div>
+
+    <div>
+      {% if not is_index %}
         {% include 'wechat-subscriber.swig' %}
       {% endif %}
     </div>
@@ -309,11 +315,17 @@
 	{% if not is_index %}
     <div class="copyright">
     <p><span>
-    <b>本文地址：</b><a href="{{ url_for(page.path) }}" title="{{ page.title }}">{{ page.permalink }}</a><br/><b>转载请注明出处，谢谢！</b>
+    <b>本文地址：</b><a href="{{ url_for(page.path) }}" title="{{ page.title }}">{{ page.permalink }}</a>&nbsp;&nbsp;&nbsp;&nbsp;<b>转载请注明出处，谢谢！</b>
     </span></p>
     </div>
 	{% endif %}
 	</div>
+
+  <div>
+  {% if not is_index %}
+    {% include 'passage-end-tag.swig' %}
+  {% endif %}
+</div>
 	
     <div>
       {% if not is_index %}

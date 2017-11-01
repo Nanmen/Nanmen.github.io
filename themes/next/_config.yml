@@ -301,14 +301,14 @@ duoshuo_shortname: nanmen
 ##  type: button
 
 # Share
-#jiathis:
+jiathis: true
 # Warning: JiaThis does not support https.
 #add_this_id:
 
 
 # Share
-duoshuo_share: true
-duoshuo_hotartical: true
+duoshuo_share: false
+duoshuo_hotartical: false
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
@@ -506,3 +506,15 @@ since: 2017
 
 # Theme version
 version: 5.1.0
+
+# --------------------------------------------------------------
+# background settings
+# --------------------------------------------------------------
+# add canvas-nest effect
+# see detail from https://github.com/hustcc/canvas-nest.js
+canvas_nest: true
+
+
+# 文章末尾添加“本文结束”标记
+passage_end_tag:
+  enabled: true
