@@ -2,16 +2,21 @@
 
 <div class="busuanzi-count">
 
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  {% if theme.busuanzi_count.site_uv %}
-    <span class="site-uv">{{ theme.busuanzi_count.site_uv_header }}<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>{{ theme.busuanzi_count.site_uv_footer }}</span>
-  {% endif %}
-
-  {% if theme.busuanzi_count.site_pv %}
-    <span class="site-pv">{{ theme.busuanzi_count.site_pv_header }}<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>{{ theme.busuanzi_count.site_pv_footer }}</span>
-  {% endif %}
-  
-</div>
-
+{% if theme.busuanzicount.enable %}
+  <div class="copyright">
+    {% if theme.busuanzicount.siteuv %}
+      <span class="powered-by">
+      {{ theme.busuanzicount.siteuvheader }}
+        <span class="busuanzi-value" id="busuanzivaluesiteuv"></span>
+        {{ theme.busuanzicount.siteuvfooter }}
+      </span>
+    {% endif %}
+    {% if theme.busuanzicount.sitepv %}
+      <span class="theme-info">
+      {{ theme.busuanzicount.sitepvheader }}
+        <span class="busuanzi-value" id="busuanzivaluesitepv"></span>
+      {{ theme.busuanzicount.sitepvfooter }}
+      </span>
+    {% endif %}
+  </div>
 {% endif %}

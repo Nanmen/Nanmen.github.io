@@ -7,6 +7,7 @@ tags:
 comments: true
 abbrlink: fddbb00f
 date: 2017-02-21 19:01:28
+copyright: true
 ---
 
 ## <center>js学习之promise<center>

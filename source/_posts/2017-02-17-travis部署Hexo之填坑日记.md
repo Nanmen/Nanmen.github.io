@@ -6,6 +6,7 @@ tags:
 comments: true
 abbrlink: a8653e18
 date: 2017-02-17 16:34:46
+copyright: true
 ---
 
 这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。
