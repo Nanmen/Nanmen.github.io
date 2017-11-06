@@ -13,7 +13,7 @@ copyright: true
 
 ### 设置yum代码库
 
-* certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other
+* certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html) 和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other
 
 ``` bash
 1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
@@ -62,12 +62,12 @@ certbot-auto命令在root用户下执行，certbot-auto会执行更新certbot版
 
 生成的证书放在/etc/letsencrypt/live/[网站域名]下，证书有效期3个月
 
-文件名| 内容
--------|----------
-cert.pem | 	服务端证书
-chain.pem	 |浏览器需要的所有证书但不包括服务端证书，比如根证书和中间证书
-fullchain.pem |包括了cert.pem和chain.pem的内容
-privkey.pem | 证书的私钥
+| 文件名           | 内容                             |
+| ------------- | ------------------------------ |
+| cert.pem      | 服务端证书                          |
+| chain.pem     | 浏览器需要的所有证书但不包括服务端证书，比如根证书和中间证书 |
+| fullchain.pem | 包括了cert.pem和chain.pem的内容       |
+| privkey.pem   | 证书的私钥                          |
 
 ### Apache 设置
 
@@ -268,8 +268,8 @@ server {
 
 主要增加3处配置：
 > proxy_set_header X-Forwarded-Proto  $scheme; tomcat可识别参数
-proxy_set_header WL-Proxy-SSL true; weblogic可识别参数
-add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; "; 启用HSTS功能，浏览器在63072000秒时间内默认以https请求服务
+> proxy_set_header WL-Proxy-SSL true; weblogic可识别参数
+> add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; "; 启用HSTS功能，浏览器在63072000秒时间内默认以https请求服务
 
 2.tomcat启用识别X-Forwarded-Proto设置
 修改配置文件server.xml，在Engine下添加下面内容
