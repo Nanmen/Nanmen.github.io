@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-01T09:32:46.389Z</updated>
+  <updated>2017-11-06T06:38:10.953Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,11 +20,55 @@
     <link href="http://ymjava.cn/archives/b585e161.html"/>
     <id>http://ymjava.cn/archives/b585e161.html</id>
     <published>2017-11-01T04:48:10.000Z</published>
-    <updated>2017-11-01T09:32:46.389Z</updated>
+    <updated>2017-11-06T06:38:10.953Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="新的开始"><a href="#新的开始" class="headerlink" title="新的开始"></a><center>新的开始</center></h2><h3 id="初整理-——-大话设计模式Tip1-读后笔记"><a href="#初整理-——-大话设计模式Tip1-读后笔记" class="headerlink" title="初整理 ——  大话设计模式Tip1 读后笔记"></a>初整理 ——  大话设计模式Tip1 读后笔记</h3><h4 id="UML类图整理"><a href="#UML类图整理" class="headerlink" title="UML类图整理"></a>UML类图整理</h4><p><img src="https://s1.ax2x.com/2017/11/06/Bfzu3.png" alt="Bfzu3.png"></p>
+<p>动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)</p>
+<ul>
+<li>第一层类的名称 (抽象类是用斜体表示)</li>
+<li>第二层类的特性</li>
+<li>第三层类的函数方法</li>
+</ul>
+<p>飞翔 接口图</p>
+<ul>
+<li>顶层是\&lt;<interface\>&gt;显示</interface\></li>
+<li>第二层是方法<a id="more"></a>
+另一种接口表现法是棒棒糖表示法（表现的唐老鸭实现了‘讲人话’的方法）。</li>
+</ul>
+<ul>
+<li>继承：空心三角形+实线 表示。</li>
+<li>实现：空心三角形+虚线 表示。</li>
+<li>关联：实线箭头 表示。</li>
+<li>聚合：空心的菱形+实线箭头 表示。（聚合表示一种弱的‘拥有关系’，体现的是A对象可以包含B对象，但B对象不是A对象的一部分[DPE]）</li>
+<li>合成：菱形+实线箭头，两端数字为基数，表示一端的类可以有几个实例。（合成是一种强的拥有关系，体现了严格的部分和整体的关系，部分和整体的生命周期一样）</li>
+<li>依赖：虚线箭头表示。</li>
+</ul>
+<h4 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h4><p>简单工厂模式：用一个单独的类来做这个创造实例的过程。</p>
+<p><img src="https://s1.ax2x.com/2017/11/06/BfO8z.png" alt="BfO8z.png"></p>
+<h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>策略模式：是一种定义一系列算法的方法，从概念上来看，所有这些算法完成的都是相同的工作，只是实现不同，它可以以相同的方式调用所有的算法，减少了各种算法类与使用算法类之间的耦合。</p>
+<p>策略模式的Strategy 类层次为Context 定义了一系列的可供重用的算法或行为。继承有助于析取出这些算法中的公共功能，</p>
+<p>策略模式的另一个优点是简化了单元测试，因为每个算法都有自己的类，可以通过自己的接口单独测试。</p>
+<p>当不同的行为堆砌在一个类中时，就很难避免使用条件语句来选择合适的行为。将这些行为封装在一个个独立的Strategy 类中，可以在使用这些行为的类中消除条件语句。</p>
+<p>策略模式就是用来封装算法的，但在实践中，我们发现可以用它来封装几乎任何类型的规则，只要在分析过程中听到需要在不同时间应用不同的业务规则，就可以考虑使用策略模式处理这种变化的可能性。（在基本的策略模式中，选择所用具体实现的职责由客户端对象承担，并转给策略模式的Context对象。）</p>
+]]></content>
     
     <summary type="html">
     
+      &lt;h2 id=&quot;新的开始&quot;&gt;&lt;a href=&quot;#新的开始&quot; class=&quot;headerlink&quot; title=&quot;新的开始&quot;&gt;&lt;/a&gt;&lt;center&gt;新的开始&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;初整理-——-大话设计模式Tip1-读后笔记&quot;&gt;&lt;a href=&quot;#初整理-——-大话设计模式Tip1-读后笔记&quot; class=&quot;headerlink&quot; title=&quot;初整理 ——  大话设计模式Tip1 读后笔记&quot;&gt;&lt;/a&gt;初整理 ——  大话设计模式Tip1 读后笔记&lt;/h3&gt;&lt;h4 id=&quot;UML类图整理&quot;&gt;&lt;a href=&quot;#UML类图整理&quot; class=&quot;headerlink&quot; title=&quot;UML类图整理&quot;&gt;&lt;/a&gt;UML类图整理&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;https://s1.ax2x.com/2017/11/06/Bfzu3.png&quot; alt=&quot;Bfzu3.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一层类的名称 (抽象类是用斜体表示)&lt;/li&gt;
+&lt;li&gt;第二层类的特性&lt;/li&gt;
+&lt;li&gt;第三层类的函数方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;飞翔 接口图&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;顶层是\&amp;lt;&lt;interface\&gt;&amp;gt;显示&lt;/li&gt;
+&lt;li&gt;第二层是方法
+    
     </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
   </entry>
@@ -34,13 +78,13 @@
     <link href="http://ymjava.cn/archives/ec1907ff.html"/>
     <id>http://ymjava.cn/archives/ec1907ff.html</id>
     <published>2017-06-08T02:55:52.000Z</published>
-    <updated>2017-11-01T07:25:34.455Z</updated>
+    <updated>2017-11-02T06:03:09.210Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Let’s-Encrypt证书使用"><a href="#Let’s-Encrypt证书使用" class="headerlink" title="Let’s Encrypt证书使用"></a><center>Let’s Encrypt证书使用<center></center></center></h2><blockquote>
 <p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
 </blockquote>
 <h3 id="设置yum代码库"><a href="#设置yum代码库" class="headerlink" title="设置yum代码库"></a>设置yum代码库</h3><ul>
-<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other" target="_blank" rel="external">http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
+<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html" target="_blank" rel="external">http://mirrors.163.com/.help/centos.html</a>) 和epel(<a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other" target="_blank" rel="external">https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo</div><div class="line">2.mv CentOS6-Base-163.repo /etc/yum.repos.d/</div><div class="line">3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm</div><div class="line">4.rpm -ivh epel-release-latest-6.noarch.rpm</div></pre></td></tr></table></figure>
 <p>修改CentOS6-Base-163.repo文件，将$releasever替换为6<br>修改epel.repo文件，将$releasever替换为6，将<a href="http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel" target="_blank" rel="external">http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel</a><br>运行以下命令生成缓存</p>
@@ -130,7 +174,7 @@
 &lt;p&gt;certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&quot;设置yum代码库&quot;&gt;&lt;a href=&quot;#设置yum代码库&quot; class=&quot;headerlink&quot; title=&quot;设置yum代码库&quot;&gt;&lt;/a&gt;设置yum代码库&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;certbot-auto运行是会自动连接下载依赖包，启用163(&lt;a href=&quot;http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other&quot;&gt;http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;certbot-auto运行是会自动连接下载依赖包，启用163(&lt;a href=&quot;http://mirrors.163.com/.help/centos.html&quot;&gt;http://mirrors.163.com/.help/centos.html&lt;/a&gt;) 和epel(&lt;a href=&quot;https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other&quot;&gt;https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2.mv CentOS6-Base-163.repo /etc/yum.repos.d/&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4.rpm -ivh epel-release-latest-6.noarch.rpm&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;修改CentOS6-Base-163.repo文件，将$releasever替换为6&lt;br&gt;修改epel.repo文件，将$releasever替换为6，将&lt;a href=&quot;http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel&quot;&gt;http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel&lt;/a&gt;&lt;br&gt;运行以下命令生成缓存&lt;/p&gt;

@@ -110,16 +110,49 @@
 
 
 
-<meta name="description" content="人生何处不相逢">
+<meta name="description" content="新的开始初整理 ——  大话设计模式Tip1 读后笔记UML类图整理
+动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)
+
+第一层类的名称 (抽象类是用斜体表示)
+第二层类的特性
+第三层类的函数方法
+
+飞翔 接口图
+
+顶层是\&amp;lt;&amp;gt;显示
+第二层是方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新的开始">
 <meta property="og:url" content="http://ymjava.cn/archives/b585e161.html">
 <meta property="og:site_name" content="在路上 - easy life">
-<meta property="og:description" content="人生何处不相逢">
-<meta property="og:updated_time" content="2017-11-01T09:32:46.389Z">
+<meta property="og:description" content="新的开始初整理 ——  大话设计模式Tip1 读后笔记UML类图整理
+动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)
+
+第一层类的名称 (抽象类是用斜体表示)
+第二层类的特性
+第三层类的函数方法
+
+飞翔 接口图
+
+顶层是\&amp;lt;&amp;gt;显示
+第二层是方法">
+<meta property="og:image" content="https://s1.ax2x.com/2017/11/06/Bfzu3.png">
+<meta property="og:image" content="https://s1.ax2x.com/2017/11/06/BfO8z.png">
+<meta property="og:updated_time" content="2017-11-06T06:38:10.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新的开始">
-<meta name="twitter:description" content="人生何处不相逢">
+<meta name="twitter:description" content="新的开始初整理 ——  大话设计模式Tip1 读后笔记UML类图整理
+动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)
+
+第一层类的名称 (抽象类是用斜体表示)
+第二层类的特性
+第三层类的函数方法
+
+飞翔 接口图
+
+顶层是\&amp;lt;&amp;gt;显示
+第二层是方法">
+<meta name="twitter:image" content="https://s1.ax2x.com/2017/11/06/Bfzu3.png">
 
 
 
@@ -322,7 +355,7 @@
   
   
 
-  <article class="post post-type-categories " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://ymjava.cn/archives/b585e161.html">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -373,6 +406,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
 
@@ -396,7 +451,35 @@
       
 
       
-        
+        <h2 id="新的开始"><a href="#新的开始" class="headerlink" title="新的开始"></a><center>新的开始</center></h2><h3 id="初整理-——-大话设计模式Tip1-读后笔记"><a href="#初整理-——-大话设计模式Tip1-读后笔记" class="headerlink" title="初整理 ——  大话设计模式Tip1 读后笔记"></a>初整理 ——  大话设计模式Tip1 读后笔记</h3><h4 id="UML类图整理"><a href="#UML类图整理" class="headerlink" title="UML类图整理"></a>UML类图整理</h4><p><img src="https://s1.ax2x.com/2017/11/06/Bfzu3.png" alt="Bfzu3.png"></p>
+<p>动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)</p>
+<ul>
+<li>第一层类的名称 (抽象类是用斜体表示)</li>
+<li>第二层类的特性</li>
+<li>第三层类的函数方法</li>
+</ul>
+<p>飞翔 接口图</p>
+<ul>
+<li>顶层是\&lt;<interface\>&gt;显示</interface\></li>
+<li>第二层是方法<a id="more"></a>
+另一种接口表现法是棒棒糖表示法（表现的唐老鸭实现了‘讲人话’的方法）。</li>
+</ul>
+<ul>
+<li>继承：空心三角形+实线 表示。</li>
+<li>实现：空心三角形+虚线 表示。</li>
+<li>关联：实线箭头 表示。</li>
+<li>聚合：空心的菱形+实线箭头 表示。（聚合表示一种弱的‘拥有关系’，体现的是A对象可以包含B对象，但B对象不是A对象的一部分[DPE]）</li>
+<li>合成：菱形+实线箭头，两端数字为基数，表示一端的类可以有几个实例。（合成是一种强的拥有关系，体现了严格的部分和整体的关系，部分和整体的生命周期一样）</li>
+<li>依赖：虚线箭头表示。</li>
+</ul>
+<h4 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h4><p>简单工厂模式：用一个单独的类来做这个创造实例的过程。</p>
+<p><img src="https://s1.ax2x.com/2017/11/06/BfO8z.png" alt="BfO8z.png"></p>
+<h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>策略模式：是一种定义一系列算法的方法，从概念上来看，所有这些算法完成的都是相同的工作，只是实现不同，它可以以相同的方式调用所有的算法，减少了各种算法类与使用算法类之间的耦合。</p>
+<p>策略模式的Strategy 类层次为Context 定义了一系列的可供重用的算法或行为。继承有助于析取出这些算法中的公共功能，</p>
+<p>策略模式的另一个优点是简化了单元测试，因为每个算法都有自己的类，可以通过自己的接口单独测试。</p>
+<p>当不同的行为堆砌在一个类中时，就很难避免使用条件语句来选择合适的行为。将这些行为封装在一个个独立的Strategy 类中，可以在使用这些行为的类中消除条件语句。</p>
+<p>策略模式就是用来封装算法的，但在实践中，我们发现可以用它来封装几乎任何类型的规则，只要在分析过程中听到需要在不同时间应用不同的业务规则，就可以考虑使用策略模式处理这种变化的可能性。（在基本的策略模式中，选择所用具体实现的职责由客户端对象承担，并转给策略模式的Context对象。）</p>
+
       
     </div>
 
@@ -413,7 +496,7 @@
   <p><span>本文标题:</span><a href="/archives/b585e161.html">新的开始</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 南风 的个人博客">南风</a></p>
   <p><span>发布时间:</span>2017年11月01日 - 12:11</p>
-  <p><span>最后更新:</span>2017年11月01日 - 17:11</p>
+  <p><span>最后更新:</span>2017年11月06日 - 14:11</p>
   <p><span>原始链接:</span><a href="/archives/b585e161.html" title="新的开始">http://ymjava.cn/archives/b585e161.html</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://ymjava.cn/archives/b585e161.html"  aria-label="复制成功！"></i></span>
   </p>
@@ -557,8 +640,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -580,7 +672,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -632,6 +724,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新的开始"><span class="nav-number">1.</span> <span class="nav-text">新的开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初整理-——-大话设计模式Tip1-读后笔记"><span class="nav-number">1.1.</span> <span class="nav-text">初整理 ——  大话设计模式Tip1 读后笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UML类图整理"><span class="nav-number">1.1.1.</span> <span class="nav-text">UML类图整理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.1.2.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#策略模式"><span class="nav-number">1.1.3.</span> <span class="nav-text">策略模式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

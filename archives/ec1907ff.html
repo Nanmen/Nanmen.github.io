@@ -114,7 +114,7 @@
 certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。
 
 设置yum代码库
-certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_th">
+certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html) 和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Let's Encrypt证书使用">
 <meta property="og:url" content="http://ymjava.cn/archives/ec1907ff.html">
@@ -123,21 +123,21 @@ certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.1
 certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。
 
 设置yum代码库
-certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_th">
+certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html) 和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_t">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/64659649.png">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65091944.png">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65673128.png">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65716484.png">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65317389.png">
 <meta property="og:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/65382741.png">
-<meta property="og:updated_time" content="2017-11-01T07:25:34.455Z">
+<meta property="og:updated_time" content="2017-11-02T06:03:09.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Let's Encrypt证书使用">
 <meta name="twitter:description" content="Let’s Encrypt证书使用
 certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。
 
 设置yum代码库
-certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_th">
+certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.163.com/.help/centos.html) 和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_t">
 <meta name="twitter:image" content="http://f3e6036a.fromwiz.com/share/resources/b0c2bbb1-1a90-4b45-a09a-c7aa9804cd7c/index_files/64659649.png">
 
 
@@ -441,7 +441,7 @@ certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.1
 <p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
 </blockquote>
 <h3 id="设置yum代码库"><a href="#设置yum代码库" class="headerlink" title="设置yum代码库"></a>设置yum代码库</h3><ul>
-<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other" target="_blank" rel="external">http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
+<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html" target="_blank" rel="external">http://mirrors.163.com/.help/centos.html</a>) 和epel(<a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other" target="_blank" rel="external">https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo</div><div class="line">2.mv CentOS6-Base-163.repo /etc/yum.repos.d/</div><div class="line">3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm</div><div class="line">4.rpm -ivh epel-release-latest-6.noarch.rpm</div></pre></td></tr></table></figure>
 <p>修改CentOS6-Base-163.repo文件，将$releasever替换为6<br>修改epel.repo文件，将$releasever替换为6，将<a href="http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel" target="_blank" rel="external">http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel</a><br>运行以下命令生成缓存</p>
@@ -540,7 +540,7 @@ certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.1
   <p><span>本文标题:</span><a href="/archives/ec1907ff.html">Let's Encrypt证书使用</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 南风 的个人博客">南风</a></p>
   <p><span>发布时间:</span>2017年06月08日 - 10:06</p>
-  <p><span>最后更新:</span>2017年11月01日 - 15:11</p>
+  <p><span>最后更新:</span>2017年11月02日 - 14:11</p>
   <p><span>原始链接:</span><a href="/archives/ec1907ff.html" title="Let's Encrypt证书使用">http://ymjava.cn/archives/ec1907ff.html</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://ymjava.cn/archives/ec1907ff.html"  aria-label="复制成功！"></i></span>
   </p>
@@ -720,7 +720,7 @@ certbot-auto运行是会自动连接下载依赖包，启用163(http://mirrors.1
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

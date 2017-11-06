@@ -323,7 +323,7 @@
   
   
 
-  <article class="post post-type-categories " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://ymjava.cn/archives/b585e161.html">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -377,6 +377,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
 
@@ -401,9 +423,24 @@
 
       
         
-          
-            
-          
+          <h2 id="新的开始"><a href="#新的开始" class="headerlink" title="新的开始"></a><center>新的开始</center></h2><h3 id="初整理-——-大话设计模式Tip1-读后笔记"><a href="#初整理-——-大话设计模式Tip1-读后笔记" class="headerlink" title="初整理 ——  大话设计模式Tip1 读后笔记"></a>初整理 ——  大话设计模式Tip1 读后笔记</h3><h4 id="UML类图整理"><a href="#UML类图整理" class="headerlink" title="UML类图整理"></a>UML类图整理</h4><p><img src="https://s1.ax2x.com/2017/11/06/Bfzu3.png" alt="Bfzu3.png"></p>
+<p>动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)</p>
+<ul>
+<li>第一层类的名称 (抽象类是用斜体表示)</li>
+<li>第二层类的特性</li>
+<li>第三层类的函数方法</li>
+</ul>
+<p>飞翔 接口图</p>
+<ul>
+<li>顶层是\&lt;<interface\>&gt;显示</li>
+<li>第二层是方法
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/archives/b585e161.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -557,7 +594,7 @@
 <p>certbot软件从Github直接下载，在CentOS6、7下执行都没有问题。</p>
 </blockquote>
 <h3 id="设置yum代码库"><a href="#设置yum代码库" class="headerlink" title="设置yum代码库"></a>设置yum代码库</h3><ul>
-<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other">http://mirrors.163.com/.help/centos.html)和epel(https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
+<li>certbot-auto运行是会自动连接下载依赖包，启用163(<a href="http://mirrors.163.com/.help/centos.html">http://mirrors.163.com/.help/centos.html</a>) 和epel(<a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other">https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F)库，提前准备好环境，更多查看https://certbot.eff.org/#centosrhel6-other</a></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.wget http://mirrors.163.com/.help/CentOS6-Base-163.repo</div><div class="line">2.mv CentOS6-Base-163.repo /etc/yum.repos.d/</div><div class="line">3.wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm</div><div class="line">4.rpm -ivh epel-release-latest-6.noarch.rpm</div></pre></td></tr></table></figure>
 <p>修改CentOS6-Base-163.repo文件，将$releasever替换为6<br>修改epel.repo文件，将$releasever替换为6，将<a href="http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel">http://download.fedoraproject.org/pub/epel修改为https://mirrors.tuna.tsinghua.edu.cn/epel</a><br>运行以下命令生成缓存</p>
@@ -840,7 +877,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
