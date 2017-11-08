@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-06T06:38:10.953Z</updated>
+  <updated>2017-11-08T10:14:38.209Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -14,6 +14,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>大话设计模式——读后感（2）</title>
+    <link href="http://ymjava.cn/archives/d1e9f0a5.html"/>
+    <id>http://ymjava.cn/archives/d1e9f0a5.html</id>
+    <published>2017-11-06T07:51:42.000Z</published>
+    <updated>2017-11-08T10:14:38.209Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="大话设计模式——读后感（2）"><a href="#大话设计模式——读后感（2）" class="headerlink" title="大话设计模式——读后感（2）"></a><center>大话设计模式——读后感（2）</center></h2><h3 id="Tip2"><a href="#Tip2" class="headerlink" title="Tip2"></a>Tip2</h3><h4 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h4><blockquote>
+<p>备忘录模式：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。</p>
+</blockquote>
+<p><img src="http://images2015.cnblogs.com/blog/527668/201601/527668-20160109144237450-356010664.jpg" alt=""></p>
+<p>Originator（发起人）：负责创建一个备忘录Memento，用以记录当前时刻它的内部状态，并可使用备忘录恢复内部状态。</p>
+<p>Originator可根据需要决定Memento存储Originator的哪些内部状态</p>
+<p>Memento（备忘录）：负责存储Originator对象的内部状态，并可防止Originator以外的其他对象访问备忘录Memento。</p>
+<p>备忘录有两个接口，Caretaker只能看到备忘录的窄接口，它只能将备忘录传递给其他对象。Originator能够看到一个宽接口，允许它访问返回到</p>
+<p>先前状态所需的所有数据。</p>
+<p>Caretaker（管理者）：负责保存好备忘录Memento，不能对备忘录的内存进行操作或检查。</p>
+<h4 id="备忘录模式代码实现"><a href="#备忘录模式代码实现" class="headerlink" title="备忘录模式代码实现"></a>备忘录模式代码实现</h4><p>以一个Emp实体对象来作为例子</p>
+<p>首先，创建一个发起人：发起人内部保存着需要备忘的属性，它负责创建一个备忘录Memento，用以记录当前时刻它的内部状态，并可使用备忘录恢复内部状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//发起人：发起人内部有自身的内部状态，并且发起人可以创建备忘录和恢复备忘录</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmpOriginator</span> </span>&#123;</div><div class="line">    <span class="comment">//需要备份的自身属性</span></div><div class="line">    <span class="keyword">private</span> String ename;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</div><div class="line">    <span class="comment">//备份</span></div><div class="line">    <span class="function"><span class="keyword">public</span> EmpMemento <span class="title">memento</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> EmpMemento(<span class="keyword">this</span>);<span class="comment">//将当前自身对象备份</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//恢复</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recovery</span><span class="params">(EmpMemento emp)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.ename = emp.getEname();</div><div class="line">        <span class="keyword">this</span>.age = emp.getAge();</div><div class="line">        <span class="keyword">this</span>.salary = emp.getSalary();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//省略get，set和带参构造器</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建备忘录对象：<font color="red">备忘录就是用来备份发起人的数据，所以构造器需要提供一个发起人对象</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//备忘录对象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmpMemento</span> </span>&#123;</div><div class="line">    <span class="comment">//自身属性</span></div><div class="line">    <span class="keyword">private</span> String ename;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary; </div><div class="line">    <span class="comment">//构造备忘录对象时，需要传入一个需要备忘的对象（发起人）</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EmpMemento</span><span class="params">(EmpOriginator emp)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.ename = emp.getEname();</div><div class="line">        <span class="keyword">this</span>.age = emp.getAge();</div><div class="line">        <span class="keyword">this</span>.salary = emp.getSalary();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//省略3个属性的set,get方法</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>开始创建一个备忘录的管理者</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//管理者：管理备忘录对象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CareTaker</span> </span>&#123;</div><div class="line">    <span class="comment">//需要管理的备忘录对象，这里也可以使用一个list容器来存储。这样可以备份多个点  </span></div><div class="line">    <span class="keyword">private</span> EmpMemento empMemento;</div><div class="line">    <span class="function"><span class="keyword">public</span> EmpMemento <span class="title">getEmpMemento</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> empMemento;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmpMemento</span><span class="params">(EmpMemento empMemento)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.empMemento = empMemento;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>单次备份测试：测试只能备份一次的备忘录</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    CareTaker taker = <span class="keyword">new</span> CareTaker();<span class="comment">//构建一个备忘录管理者</span></div><div class="line">    <span class="comment">//构建发起人</span></div><div class="line">    EmpOriginator emp = <span class="keyword">new</span> EmpOriginator(<span class="string">"张三"</span>, <span class="number">20</span>, <span class="number">4000</span>);</div><div class="line">    System.out.println(<span class="string">"第一次："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">    <span class="comment">//备份</span></div><div class="line">    taker.setEmpMemento(emp.memento());</div><div class="line"></div><div class="line">    <span class="comment">//备份完了后再修改</span></div><div class="line">    emp.setEname(<span class="string">"李四"</span>);</div><div class="line">    emp.setAge(<span class="number">30</span>);</div><div class="line">    emp.setSalary(<span class="number">50000</span>);</div><div class="line">    <span class="comment">//然后再次打印</span></div><div class="line">    System.out.println(<span class="string">"修改后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line"></div><div class="line">    <span class="comment">//开始恢复</span></div><div class="line">    emp.recovery(taker.getEmpMemento());</div><div class="line">    System.out.println(<span class="string">"恢复后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<pre><code>第一次：张三---20---4000.0
+
+修改后：李四---30---50000.0
+
+恢复后：张三---20---4000.0
+</code></pre><p>但是，这样的效果是只能备份一次。有时候我们需要备份多个点，根据需要来还原具体哪次的数据</p>
+<h5 id="多次备份"><a href="#多次备份" class="headerlink" title="多次备份"></a>多次备份</h5><p>使用Stack来存储备份数据，进行多次备份。用Stack的好处是<font color="red">Stack是后进先出的</font>，也就是说：<strong>你最近一次备份的数据会优先获取到</strong>。</p>
+<p>修改管理者中的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Stack;</div><div class="line"></div><div class="line"><span class="comment">//管理者：管理备忘录对象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CareTaker</span> </span>&#123;</div><div class="line">    <span class="comment">//需要管理的备忘录对象，这里也可以使用一个list容器来存储。这样可以备份多个点</span></div><div class="line">    <span class="comment">//或者使用一个Stack栈来保存，因为Stack是后进先出的</span></div><div class="line">    <span class="keyword">private</span> Stack&lt;EmpMemento&gt; stack = <span class="keyword">new</span> Stack&lt;EmpMemento&gt;();</div><div class="line">    <span class="comment">//备份emp数据到栈中</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mementoEmp</span><span class="params">(EmpMemento emp)</span></span>&#123;</div><div class="line">        stack.push(emp);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//从栈中获取最近一次备份的emp数据</span></div><div class="line">    <span class="function"><span class="keyword">public</span> EmpMemento <span class="title">getEmpForStack</span><span class="params">()</span></span>&#123;    </div><div class="line">        <span class="keyword">if</span> (!stack.empty()) &#123;</div><div class="line">            <span class="keyword">return</span> stack.peek();<span class="comment">//peek只获取，不删除</span></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//从栈中获取最近一次备份的emp数据,并且从栈中删除该数据</span></div><div class="line">    <span class="function"><span class="keyword">public</span> EmpMemento <span class="title">getEmpForStackAndRemove</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (!stack.empty()) &#123;</div><div class="line">            <span class="keyword">return</span> stack.pop();<span class="comment">//pop获取后删除该元素</span></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再次测试：后进先出，也就是说。恢复的话恢复的是最后一次备份的数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    CareTaker taker = <span class="keyword">new</span> CareTaker();<span class="comment">//构建一个备忘录管理者</span></div><div class="line">    <span class="comment">//构建发起人</span></div><div class="line">    EmpOriginator emp = <span class="keyword">new</span> EmpOriginator(<span class="string">"张三"</span>, <span class="number">20</span>, <span class="number">4000</span>);</div><div class="line">    System.out.println(<span class="string">"第一次："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">    <span class="comment">//第1次备份</span></div><div class="line">    taker.mementoEmp(emp.memento());</div><div class="line"></div><div class="line">    <span class="comment">//备份完了后再修改</span></div><div class="line">    emp.setEname(<span class="string">"李四"</span>);</div><div class="line">    emp.setAge(<span class="number">30</span>);</div><div class="line">    emp.setSalary(<span class="number">50000</span>);</div><div class="line">    <span class="comment">//然后再次打印</span></div><div class="line">    System.out.println(<span class="string">"1修改后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">    <span class="comment">//第2次备份</span></div><div class="line">    taker.mementoEmp(emp.memento());</div><div class="line"></div><div class="line">    <span class="comment">//备份完了后再修改</span></div><div class="line">    emp.setEname(<span class="string">"李四2"</span>);</div><div class="line">    emp.setAge(<span class="number">32</span>);</div><div class="line">    emp.setSalary(<span class="number">52000</span>);</div><div class="line">    <span class="comment">//然后再次打印</span></div><div class="line">    System.out.println(<span class="string">"2修改后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">    <span class="comment">//第3次备份</span></div><div class="line">    taker.mementoEmp(emp.memento());</div><div class="line"></div><div class="line">    <span class="comment">//备份完了后再修改</span></div><div class="line">    emp.setEname(<span class="string">"李四3"</span>);</div><div class="line">    emp.setAge(<span class="number">33</span>);</div><div class="line">    emp.setSalary(<span class="number">32000</span>);</div><div class="line">    <span class="comment">//然后再次打印</span></div><div class="line">    System.out.println(<span class="string">"3修改后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">    <span class="comment">//第4次备份</span></div><div class="line">    taker.mementoEmp(emp.memento());</div><div class="line"></div><div class="line">    <span class="comment">//开始恢复</span></div><div class="line">    emp.recovery(taker.getEmpForStack());<span class="comment">//恢复的是第4次备份的数据（3修改后）</span></div><div class="line">    System.out.println(<span class="string">"恢复后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<pre><code>第一次：张三---20---4000.0
+
+1修改后：李四---30---50000.0
+
+2修改后：李四2---32---52000.0
+
+3修改后：李四3---33---32000.0
+
+恢复后：李四3---33---32000.0
+</code></pre><p>当然，也可以恢复之后把它从栈中删除。</p>
+<p>测试：恢复之前从栈中删除两个最近的数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//开始恢复</span></div><div class="line">taker.getEmpForStackAndRemove();<span class="comment">//删除最近一次的备份</span></div><div class="line">taker.getEmpForStackAndRemove();<span class="comment">//删除最近一次的备份</span></div><div class="line">emp.recovery(taker.getEmpForStack());<span class="comment">//此时获取的是原来未删除时倒数第二次的备份</span></div><div class="line">System.out.println(<span class="string">"恢复后："</span>+emp.getEname()+<span class="string">"---"</span>+emp.getAge()+<span class="string">"---"</span>+emp.getSalary());</div></pre></td></tr></table></figure>
+<p>此时的结果就是如下：可见，这里已经把2和3给删除了</p>
+<pre><code>第一次：张三---20---4000.0
+
+1修改后：李四---30---50000.0
+
+2修改后：李四2---32---52000.0
+
+3修改后：李四3---33---32000.0
+
+恢复后：李四---30---50000.0
+</code></pre><h4 id="总结-应用场景"><a href="#总结-应用场景" class="headerlink" title="总结-应用场景"></a>总结-应用场景</h4><ol>
+<li><p>棋类游戏中的悔棋操作</p>
+</li>
+<li><p>软件中的撤销操作</p>
+</li>
+<li><p>数据库中的事务回滚操作</p>
+</li>
+<li><p>常用软件中的历史记录功能</p>
+</li>
+</ol>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li>大话设计模式(带目录完整版).pdf</li>
+<li><a href="http://www.cnblogs.com/meet/p/5116407.html" target="_blank" rel="external">备忘录模式（Memento） - FangZheng - 博客园</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;大话设计模式——读后感（2）&quot;&gt;&lt;a href=&quot;#大话设计模式——读后感（2）&quot; class=&quot;headerlink&quot; title=&quot;大话设计模式——读后感（2）&quot;&gt;&lt;/a&gt;&lt;center&gt;大话设计模式——读后感（2）&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>新的开始</title>
