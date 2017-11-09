@@ -129,7 +129,7 @@ Originator（发起人）：负责创建一个备忘录Memento，用以记录当
 Originator可根据需要决定Memento存储Originator的哪些内部状态
 M">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/527668/201601/527668-20160109144237450-356010664.jpg">
-<meta property="og:updated_time" content="2017-11-08T10:14:38.209Z">
+<meta property="og:updated_time" content="2017-11-09T02:18:55.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大话设计模式——读后感（2）">
 <meta name="twitter:description" content="大话设计模式——读后感（2）Tip2备忘录模式
@@ -447,7 +447,7 @@ M">
 <p>Memento（备忘录）：负责存储Originator对象的内部状态，并可防止Originator以外的其他对象访问备忘录Memento。</p>
 <p>备忘录有两个接口，Caretaker只能看到备忘录的窄接口，它只能将备忘录传递给其他对象。Originator能够看到一个宽接口，允许它访问返回到</p>
 <p>先前状态所需的所有数据。</p>
-<p>Caretaker（管理者）：负责保存好备忘录Memento，不能对备忘录的内存进行操作或检查。</p>
+<p>Caretaker（管理者）：负责保存好备忘录Memento，不能对备忘录的内存进行操作或检查。<br><a id="more"></a></p>
 <h4 id="备忘录模式代码实现"><a href="#备忘录模式代码实现" class="headerlink" title="备忘录模式代码实现"></a>备忘录模式代码实现</h4><p>以一个Emp实体对象来作为例子</p>
 <p>首先，创建一个发起人：发起人内部保存着需要备忘的属性，它负责创建一个备忘录Memento，用以记录当前时刻它的内部状态，并可使用备忘录恢复内部状态。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//发起人：发起人内部有自身的内部状态，并且发起人可以创建备忘录和恢复备忘录</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmpOriginator</span> </span>&#123;</div><div class="line">    <span class="comment">//需要备份的自身属性</span></div><div class="line">    <span class="keyword">private</span> String ename;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</div><div class="line">    <span class="comment">//备份</span></div><div class="line">    <span class="function"><span class="keyword">public</span> EmpMemento <span class="title">memento</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> EmpMemento(<span class="keyword">this</span>);<span class="comment">//将当前自身对象备份</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//恢复</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recovery</span><span class="params">(EmpMemento emp)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.ename = emp.getEname();</div><div class="line">        <span class="keyword">this</span>.age = emp.getAge();</div><div class="line">        <span class="keyword">this</span>.salary = emp.getSalary();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//省略get，set和带参构造器</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -523,7 +523,7 @@ M">
   <p><span>本文标题:</span><a href="/archives/d1e9f0a5.html">大话设计模式——读后感（2）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 南风 的个人博客">南风</a></p>
   <p><span>发布时间:</span>2017年11月06日 - 15:11</p>
-  <p><span>最后更新:</span>2017年11月08日 - 18:11</p>
+  <p><span>最后更新:</span>2017年11月09日 - 10:11</p>
   <p><span>原始链接:</span><a href="/archives/d1e9f0a5.html" title="大话设计模式——读后感（2）">http://ymjava.cn/archives/d1e9f0a5.html</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://ymjava.cn/archives/d1e9f0a5.html"  aria-label="复制成功！"></i></span>
   </p>
