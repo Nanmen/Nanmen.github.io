@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-09T07:04:23.741Z</updated>
+  <updated>2017-11-09T07:05:15.069Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ymjava.cn/archives/e8996bd7.html"/>
     <id>http://ymjava.cn/archives/e8996bd7.html</id>
     <published>2017-11-09T02:51:05.000Z</published>
-    <updated>2017-11-09T07:04:23.741Z</updated>
+    <updated>2017-11-09T07:05:15.069Z</updated>
     
     <content type="html"><![CDATA[<h2 id="推送失败——git命令学习"><a href="#推送失败——git命令学习" class="headerlink" title="推送失败——git命令学习"></a><center>推送失败——git命令学习</center></h2><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g <span class="_">-d</span></div></pre></td></tr></table></figure>
