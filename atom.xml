@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-09T07:05:15.069Z</updated>
+  <updated>2017-11-09T07:11:11.347Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://ymjava.cn/archives/e8996bd7.html"/>
     <id>http://ymjava.cn/archives/e8996bd7.html</id>
     <published>2017-11-09T02:51:05.000Z</published>
-    <updated>2017-11-09T07:05:15.069Z</updated>
+    <updated>2017-11-09T07:11:11.347Z</updated>
     
     <content type="html"><![CDATA[<h2 id="推送失败——git命令学习"><a href="#推送失败——git命令学习" class="headerlink" title="推送失败——git命令学习"></a><center>推送失败——git命令学习</center></h2><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g <span class="_">-d</span></div></pre></td></tr></table></figure>
 <p>却给我报了个错误,<strong>Could not open a connection to your authentication agent</strong>，一翻百度发现解决方法如下：<br><a id="more"></a></p>
 <blockquote>
-<p>1.exec ssh-agent bash<br>2.eval ssh-agent -s<br>3.ssh-add “C:\Users\Administrator.ssh\id_rsa”</p>
+<p>1.exec ssh-agent bash<br>2.eval ssh-agent -s<br>3.ssh-add “C:\Users\LN.ssh\id_rsa”</p>
 </blockquote>
 <p>将相应的秘钥地址改为你自己的地址，然后就可以愉快的输入测试命令了</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh -T git@github.com</div><div class="line">ssh -T git@git.coding.net</div></pre></td></tr></table></figure>

@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[记推送失败——git命令之ssh-add学习]]></title>
       <url>%2Farchives%2Fe8996bd7.html</url>
-      <content type="text"><![CDATA[推送失败——git命令学习起因昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的 1hexo g -d 却给我报了个错误,Could not open a connection to your authentication agent，一翻百度发现解决方法如下： 1.exec ssh-agent bash2.eval ssh-agent -s3.ssh-add “C:\Users\Administrator.ssh\id_rsa” 将相应的秘钥地址改为你自己的地址，然后就可以愉快的输入测试命令了 12ssh -T git@github.comssh -T git@git.coding.net 测试通过，ok，然后就可以输入部署命令了。 参考文档 win下给 Git Bash 添加私钥时ssh-add报错的解决办法]]></content>
+      <content type="text"><![CDATA[推送失败——git命令学习起因昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的 1hexo g -d 却给我报了个错误,Could not open a connection to your authentication agent，一翻百度发现解决方法如下： 1.exec ssh-agent bash2.eval ssh-agent -s3.ssh-add “C:\Users\LN.ssh\id_rsa” 将相应的秘钥地址改为你自己的地址，然后就可以愉快的输入测试命令了 12ssh -T git@github.comssh -T git@git.coding.net 测试通过，ok，然后就可以输入部署命令了。 参考文档 win下给 Git Bash 添加私钥时ssh-add报错的解决办法]]></content>
     </entry>
 
     
