@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-09T02:18:55.246Z</updated>
+  <updated>2017-11-09T07:04:23.741Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -16,11 +16,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>记推送失败——git命令之ssh-add学习</title>
+    <link href="http://ymjava.cn/archives/e8996bd7.html"/>
+    <id>http://ymjava.cn/archives/e8996bd7.html</id>
+    <published>2017-11-09T02:51:05.000Z</published>
+    <updated>2017-11-09T07:04:23.741Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="推送失败——git命令学习"><a href="#推送失败——git命令学习" class="headerlink" title="推送失败——git命令学习"></a><center>推送失败——git命令学习</center></h2><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g <span class="_">-d</span></div></pre></td></tr></table></figure>
+<p>却给我报了个错误,<strong>Could not open a connection to your authentication agent</strong>，一翻百度发现解决方法如下：<br><a id="more"></a></p>
+<blockquote>
+<p>1.exec ssh-agent bash<br>2.eval ssh-agent -s<br>3.ssh-add “C:\Users\Administrator.ssh\id_rsa”</p>
+</blockquote>
+<p>将相应的秘钥地址改为你自己的地址，然后就可以愉快的输入测试命令了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh -T git@github.com</div><div class="line">ssh -T git@git.coding.net</div></pre></td></tr></table></figure>
+<p>测试通过，ok，然后就可以输入部署命令了。</p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li><a href="http://www.jianshu.com/p/1adbd697b249" target="_blank" rel="external">win下给 Git Bash 添加私钥时ssh-add报错的解决办法</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;推送失败——git命令学习&quot;&gt;&lt;a href=&quot;#推送失败——git命令学习&quot; class=&quot;headerlink&quot; title=&quot;推送失败——git命令学习&quot;&gt;&lt;/a&gt;&lt;center&gt;推送失败——git命令学习&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo g &lt;span class=&quot;_&quot;&gt;-d&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;却给我报了个错误,&lt;strong&gt;Could not open a connection to your authentication agent&lt;/strong&gt;，一翻百度发现解决方法如下：&lt;br&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>大话设计模式——读后感（2）</title>
     <link href="http://ymjava.cn/archives/d1e9f0a5.html"/>
     <id>http://ymjava.cn/archives/d1e9f0a5.html</id>
     <published>2017-11-06T07:51:42.000Z</published>
-    <updated>2017-11-09T02:18:55.246Z</updated>
+    <updated>2017-11-09T06:58:06.828Z</updated>
     
     <content type="html"><![CDATA[<h2 id="大话设计模式——读后感（2）"><a href="#大话设计模式——读后感（2）" class="headerlink" title="大话设计模式——读后感（2）"></a><center>大话设计模式——读后感（2）</center></h2><h3 id="Tip2"><a href="#Tip2" class="headerlink" title="Tip2"></a>Tip2</h3><h4 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h4><blockquote>
 <p>备忘录模式：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。</p>
@@ -107,7 +141,7 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="设计模式" scheme="http://ymjava.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
   </entry>
@@ -117,7 +151,7 @@
     <link href="http://ymjava.cn/archives/b585e161.html"/>
     <id>http://ymjava.cn/archives/b585e161.html</id>
     <published>2017-11-01T04:48:10.000Z</published>
-    <updated>2017-11-06T06:38:10.953Z</updated>
+    <updated>2017-11-09T06:58:14.094Z</updated>
     
     <content type="html"><![CDATA[<h2 id="新的开始"><a href="#新的开始" class="headerlink" title="新的开始"></a><center>新的开始</center></h2><h3 id="初整理-——-大话设计模式Tip1-读后笔记"><a href="#初整理-——-大话设计模式Tip1-读后笔记" class="headerlink" title="初整理 ——  大话设计模式Tip1 读后笔记"></a>初整理 ——  大话设计模式Tip1 读后笔记</h3><h4 id="UML类图整理"><a href="#UML类图整理" class="headerlink" title="UML类图整理"></a>UML类图整理</h4><p><img src="https://s1.ax2x.com/2017/11/06/Bfzu3.png" alt="Bfzu3.png"></p>
 <p>动物类 (‘+’ 表示public ，’-‘ 表示private，’#’表示protected)</p>
@@ -165,7 +199,7 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="设计模式" scheme="http://ymjava.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
   </entry>
