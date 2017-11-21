@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-15T01:28:51.769Z</updated>
+  <updated>2017-11-21T07:54:15.079Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ymjava.cn/archives/a5d8a8b7.html"/>
     <id>http://ymjava.cn/archives/a5d8a8b7.html</id>
     <published>2017-11-13T03:00:10.000Z</published>
-    <updated>2017-11-15T01:28:51.769Z</updated>
+    <updated>2017-11-21T07:54:15.079Z</updated>
     
     <summary type="html">
     
@@ -38,7 +38,7 @@
     <link href="http://ymjava.cn/archives/b971456b.html"/>
     <id>http://ymjava.cn/archives/b971456b.html</id>
     <published>2017-11-10T01:11:45.000Z</published>
-    <updated>2017-11-13T03:01:09.766Z</updated>
+    <updated>2017-11-21T07:54:15.074Z</updated>
     
     <content type="html"><![CDATA[<h2 id="即时通讯开源软件归纳"><a href="#即时通讯开源软件归纳" class="headerlink" title="即时通讯开源软件归纳"></a><center>即时通讯开源软件归纳</center></h2><h3 id="开源归纳"><a href="#开源归纳" class="headerlink" title="开源归纳"></a>开源归纳</h3><p>因为需要兼容android和ios，所以一翻查找，暂时发现以下待定开源项目：</p>
 <ul>
