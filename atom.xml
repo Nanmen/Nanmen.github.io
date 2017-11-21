@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-11-09T07:11:11.347Z</updated>
+  <updated>2017-11-15T01:28:51.769Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IM即时通讯资料整理</title>
+    <link href="http://ymjava.cn/archives/a5d8a8b7.html"/>
+    <id>http://ymjava.cn/archives/a5d8a8b7.html</id>
+    <published>2017-11-13T03:00:10.000Z</published>
+    <updated>2017-11-15T01:28:51.769Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="IM即时通讯" scheme="http://ymjava.cn/tags/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>即时通讯开源软件归纳</title>
+    <link href="http://ymjava.cn/archives/b971456b.html"/>
+    <id>http://ymjava.cn/archives/b971456b.html</id>
+    <published>2017-11-10T01:11:45.000Z</published>
+    <updated>2017-11-13T03:01:09.766Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="即时通讯开源软件归纳"><a href="#即时通讯开源软件归纳" class="headerlink" title="即时通讯开源软件归纳"></a><center>即时通讯开源软件归纳</center></h2><h3 id="开源归纳"><a href="#开源归纳" class="headerlink" title="开源归纳"></a>开源归纳</h3><p>因为需要兼容android和ios，所以一翻查找，暂时发现以下待定开源项目：</p>
+<ul>
+<li><p>基于<strong>XMPP</strong>  进行的二次开发项目，目前有基于服务端的开源项目：Openfire 。</p>
+</li>
+<li><p>基于<strong>MQTT</strong> 进行的二次开发项目。</p>
+</li>
+<li><p>基于<strong>MobileIMSDK</strong> 的二次开发项目。</p>
+</li>
+<li><p>基于<strong>T-IO</strong> 的二次开发项目。</p>
+</li>
+</ul>
+<h3 id="优良归纳"><a href="#优良归纳" class="headerlink" title="优良归纳"></a>优良归纳</h3><p>XMPP：是基于XML的,有服务器的开源项目ejabberd；</p>
+<blockquote>
+<p>ejabberd是基于Jabber/XMPP协议的即时通讯服务器，由GPLv2授权（免费和开放源码），采用Erlang/OTP开发。它的特点是，跨平台，容错，集群和模块化。<br>Ejabberd目前是可扩展性最好的一种Jabber/XMPP服务器，支持分布多个服务器，并且具有容错处理，单台服务器失效不影响整个cluster运作。</p>
+</blockquote>
+<p>完整的XMPP IM 实现（Openfire + Spark + Smack）：</p>
+<blockquote>
+<p>包括服务器端——Openfire，客户端——Spark，XMPP 传输协议的实现——Smack（记住，XMPP是一个协议，协议是需要实现的，Smack起到的就是这样的一个作用）。三者都是基于Java 语言的实现。</p>
+</blockquote>
+<p>缺点：其中XMPP是基于XML的,并且不支持消息质量QOS, 所以本身并没有消息重传的机制,从而会导致丢消息。</p>
+<p>MQTT：是基于二进制的,支持QOS,并且已成为物联网的协议标准。</p>
+<p>MobileIMSDK：是一个比较成熟的兼容android、IOS、java标准平台的一个开源项目。有比较成熟的基于其上的开发的demo和示例。</p>
+<p>T-IO：有一个完善比较全面的开源项目，但是文档和示例比较少，估计需要自己爬不少的坑（慎选）。</p>
+<hr>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li><p><a href="http://blog.csdn.net/wbw1985/article/details/5502272" target="_blank" rel="external">XMPP协议的原理介绍</a></p>
+</li>
+<li><p><a href="https://my.oschina.net/yuanxulong/blog/348572" target="_blank" rel="external">基于openfire+smack的Android、Web、PC开发</a></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/findumars/p/6411060.html" target="_blank" rel="external">iOS和Android使用MQTT协议实现消息推送和即时通讯（替代XMPP，已经有TMS MQTT）</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/lv_ws/article/details/50295265" target="_blank" rel="external">Android mqtt即时通讯方案</a></p>
+</li>
+<li><p><a href="https://github.com/JackJiang2011/MobileIMSDK" target="_blank" rel="external">一个专为移动端开发的原创即时通讯框架，超轻量级、高度提炼，完全基于UDP协议，支持iOS、Android、标准Java平台。</a></p>
+</li>
+<li><p><a href="https://github.com/ChenYilong/iOSBlog/blob/master/Tips/%E5%9F%BA%E4%BA%8EWebsocket%E7%9A%84IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E6%8A%80%E6%9C%AF/IM%20%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E6%8A%80%E6%9C%AF%E5%9C%A8%E5%A4%9A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%EF%BC%88iOS%E8%A7%86%E8%A7%92%EF%BC%89.md#%E5%9F%BA%E4%BA%8E-websocket-%E7%9A%84-im-%E7%B3%BB%E7%BB%9F" target="_blank" rel="external">基于Websocket的IM即时通讯技术/IM 即时通讯技术在多应用场景下的技术实现，以及性能调优（iOS视角）.md</a></p>
+</li>
+<li><p><a href="https://github.com/fanux/lhttp/blob/master/doc/README_zh.md" target="_blank" rel="external">Lhttp个基于websocket服务端框架</a></p>
+</li>
+<li><p><a href="http://t-io.org/#/" target="_blank" rel="external">t-io: 不仅仅是百万级即时通讯框架</a></p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;即时通讯开源软件归纳&quot;&gt;&lt;a href=&quot;#即时通讯开源软件归纳&quot; class=&quot;headerlink&quot; title=&quot;即时通讯开源软件归纳&quot;&gt;&lt;/a&gt;&lt;center&gt;即时通讯开源软件归纳&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;开源归纳&quot;&gt;&lt;a href=&quot;#
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="IM即时通讯" scheme="http://ymjava.cn/tags/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/"/>
+    
+      <category term="开源项目" scheme="http://ymjava.cn/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>记推送失败——git命令之ssh-add学习</title>

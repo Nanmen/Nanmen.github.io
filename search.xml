@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[IM即时通讯资料整理]]></title>
+      <url>%2Farchives%2Fa5d8a8b7.html</url>
+      <content type="text"></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[即时通讯开源软件归纳]]></title>
+      <url>%2Farchives%2Fb971456b.html</url>
+      <content type="text"><![CDATA[即时通讯开源软件归纳开源归纳因为需要兼容android和ios，所以一翻查找，暂时发现以下待定开源项目： 基于XMPP 进行的二次开发项目，目前有基于服务端的开源项目：Openfire 。 基于MQTT 进行的二次开发项目。 基于MobileIMSDK 的二次开发项目。 基于T-IO 的二次开发项目。 优良归纳XMPP：是基于XML的,有服务器的开源项目ejabberd； ejabberd是基于Jabber/XMPP协议的即时通讯服务器，由GPLv2授权（免费和开放源码），采用Erlang/OTP开发。它的特点是，跨平台，容错，集群和模块化。Ejabberd目前是可扩展性最好的一种Jabber/XMPP服务器，支持分布多个服务器，并且具有容错处理，单台服务器失效不影响整个cluster运作。 完整的XMPP IM 实现（Openfire + Spark + Smack）： 包括服务器端——Openfire，客户端——Spark，XMPP 传输协议的实现——Smack（记住，XMPP是一个协议，协议是需要实现的，Smack起到的就是这样的一个作用）。三者都是基于Java 语言的实现。 缺点：其中XMPP是基于XML的,并且不支持消息质量QOS, 所以本身并没有消息重传的机制,从而会导致丢消息。 MQTT：是基于二进制的,支持QOS,并且已成为物联网的协议标准。 MobileIMSDK：是一个比较成熟的兼容android、IOS、java标准平台的一个开源项目。有比较成熟的基于其上的开发的demo和示例。 T-IO：有一个完善比较全面的开源项目，但是文档和示例比较少，估计需要自己爬不少的坑（慎选）。 参考文档 XMPP协议的原理介绍 基于openfire+smack的Android、Web、PC开发 iOS和Android使用MQTT协议实现消息推送和即时通讯（替代XMPP，已经有TMS MQTT） Android mqtt即时通讯方案 一个专为移动端开发的原创即时通讯框架，超轻量级、高度提炼，完全基于UDP协议，支持iOS、Android、标准Java平台。 基于Websocket的IM即时通讯技术/IM 即时通讯技术在多应用场景下的技术实现，以及性能调优（iOS视角）.md Lhttp个基于websocket服务端框架 t-io: 不仅仅是百万级即时通讯框架]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[记推送失败——git命令之ssh-add学习]]></title>
       <url>%2Farchives%2Fe8996bd7.html</url>
       <content type="text"><![CDATA[推送失败——git命令学习起因昨天更新文档推送设计模式的笔记，在git bash 命令框下输入以前的 1hexo g -d 却给我报了个错误,Could not open a connection to your authentication agent，一翻百度发现解决方法如下： 1.exec ssh-agent bash2.eval ssh-agent -s3.ssh-add “C:\Users\LN.ssh\id_rsa” 将相应的秘钥地址改为你自己的地址，然后就可以愉快的输入测试命令了 12ssh -T git@github.comssh -T git@git.coding.net 测试通过，ok，然后就可以输入部署命令了。 参考文档 win下给 Git Bash 添加私钥时ssh-add报错的解决办法]]></content>
