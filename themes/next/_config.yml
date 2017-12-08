@@ -137,6 +137,7 @@ font:
 social:
   #LinkLabel: Link
   Github: https://github.com/Nanmen
+  Email: 1131443862@qq.com
 
   # Social Links Icons
 # Icon Mapping:
@@ -150,6 +151,7 @@ social_icons:
   GitHub: github
   Twitter: twitter
   Weibo: weibo
+  Email: fa-envelope
 
 
 # Sidebar Avatar
