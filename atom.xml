@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2017-12-10T05:28:27.383Z</updated>
+  <updated>2018-02-24T07:34:00.984Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -14,6 +14,390 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java23种设计模式概括</title>
+    <link href="http://ymjava.cn/archives/5c9c5ce0.html"/>
+    <id>http://ymjava.cn/archives/5c9c5ce0.html</id>
+    <published>2018-02-24T03:06:09.000Z</published>
+    <updated>2018-02-24T07:34:00.984Z</updated>
+    
+    <content type="html"><![CDATA[<p>##<center>java 23种设计模式概括</center></p>
+<h3 id="目录概览"><a href="#目录概览" class="headerlink" title="目录概览"></a>目录概览</h3><h4 id="创建型模式：关注对象的创建过程"><a href="#创建型模式：关注对象的创建过程" class="headerlink" title="创建型模式：关注对象的创建过程"></a>创建型模式：关注对象的创建过程</h4><ul>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116398.html" target="_blank" rel="external">单例模式</a>：保证一个类只有一个实例，并且提供一个访问该实例的全局访问点<br>主要：<br>饿汉式（线程安全，调用效率高，但是不能延时加载）<br>懒汉式（线程安全，调用效率不高，但是可以延时加载）<br>其他：<br>双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）<br>静态内部类式（线程安全，调用效率高。但是可以延时加载）<br>枚举单例（线程安全，调用效率高，不能延时加载）</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116400.html" target="_blank" rel="external">工厂模式</a>：<br>简单工厂模式：用来生产同一等级结构中的任意产品（对已有产品新增功能，需要修改源代码）<br>虽然能通过工厂来创建对象，但是违反了开闭原则。一旦增加功能需要在原有基础上修改代码。<br>工厂方法模式：用来生产同一等级结构中的固定产品（支持增加任意产品，不用修改源代码）<br>将工厂类调整为工厂接口，需要什么类型的工厂就使用该类实现该工厂，创建相应的产品。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116400.html" target="_blank" rel="external">抽象工厂模式</a>：用来生产不同产品族的全部产品（对于增加新的产品，无能为力。可增加一系列的产品族）抽象工厂模式用来生产不同产品族的全部产品，对于只增加产品某一部分则不适用。抽象工厂模式是工厂模式的一种升级版本。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116401.html" target="_blank" rel="external">建造者​模式</a>：分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象。<br>假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。</p>
+<a id="more"></a>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116404.html" target="_blank" rel="external">原型模式</a>：通过new产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式。<br>所谓原型模式就是构建一个对象的原型，通过原型来创建出新的对象。</p>
+</li>
+</ul>
+<h4 id="行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。"><a href="#行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。" class="headerlink" title="行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。"></a>行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。</h4><ul>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116417.html" target="_blank" rel="external">模板方法模式</a>：定义一个操作中的算法骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的<br>某些特定步骤。也就是说：假如某些操作代码基本相同，只是其中一部分会经常改变，则可以使用模板方法，将不变的部分作为一个模板，将容易变动的部分让子类来实现。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116430.html" target="_blank" rel="external">命令模式</a>（不常用）：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化，对请求排队或记录请求日志。以及支持可撤销的操作。说白了，就是将一系列的请求命令封装起来，不直接调用真正执行者的方法，这样比较好扩展。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116437.html" target="_blank" rel="external">迭代器模式</a>：提供一种方法顺序的访问一个聚合对象中各个元素，而又不暴露该对象的内部表示。也就是开发一个用于迭代某个对象中元素的功能。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116411.html" target="_blank" rel="external">观察者模式</a>：也叫（发布-订阅模式）定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象，这个主题对象在状态发生变化时，会通知所有观察者对象。使它们能够自动更新自己。例如：发广播，游戏中大喇叭，群聊。jdk中提供了抽象主题和抽象观察者的接口，我们可以使用这两个接口来方便的定义自己的观察者模式</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116432.html" target="_blank" rel="external">中介者模式</a>：用一个中介对象来封装一系列的对象交互，中介者使各对象不需要显示地相互引用。从而使其耦合松散，而且可以独立地改变它们之间的交互。中介者模式核心：1.就是将网状结构处理成星型结构 2.将多对多处理成一对多</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116407.html" target="_blank" rel="external">备忘录模式</a>：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。也就是说，不破坏源数据的情况下，将源数据进行一次或者多次的备份。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116424.html" target="_blank" rel="external">解释器模式</a>（不常用）：给定一个语言，定义它的文法一种表示。并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116415.html" target="_blank" rel="external">状态模式</a>：当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。状态模式主要解决的是当控制一个对象状态转换的条件表达式过于复杂时的情况。当遇到不同的状态遇到不同的行为的时候，可以使用状态模式。例如：酒店房间的状态，是空闲，预定，还是已入住呢？而且这三种状态都对应着不同的行为，空闲的话就可预定，可预定的话就可入住，已入住的话就不能显示空闲。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116419.html" target="_blank" rel="external">策略模式</a>：它定义了算法家族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化不会影响到使用算法的客户。例如：商场中的打折商品，针对不同的客户可能有不同的折扣。那这些算法该怎么定义呢？可以使用策略模式，给每个会员或者商品都指定一个特定的算法，根据不同的算法，打不同的折扣。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116440.html" target="_blank" rel="external">职责链模式</a>：将能够处理同一类请求的对象连成一条链，使这些对象都有机会处理请求，所提交的请求沿着链传递。从而避免请求的发送者和接受者之间的耦合关系。链上的对象逐个判断是否有能力处理该请求，如果能则就处理，如果不能，则传给链上的下一个对象。直到有一个对象处理它为止。比如：请假申请，审批人连成一条链，每个人都有机会处理这个假条，但是这个请假申请最终肯定会经过审核（不管审批是否通过）。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116422.html" target="_blank" rel="external">访问者模式</a>（不常用）：表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+</li>
+</ul>
+<h4 id="结构型模式：关注对象和类的组织"><a href="#结构型模式：关注对象和类的组织" class="headerlink" title="结构型模式：关注对象和类的组织"></a>结构型模式：关注对象和类的组织</h4><ul>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116467.html" target="_blank" rel="external">适配器模式</a>：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的类可以一起工作。例如：NBA中的球员来自不同国家，而世界标准语言是英语。那他们不会英语，也不能各自学习所有国家的语言。所以，最好的办法就是请不同的翻译,将这些球员国家的语言翻译成英语。而这些翻译就是适配器！！<br>适配器模式分类：<br>1、类适配器模式（不推荐使用）：由于类适配器模式需要多重继承对一个接口对另一个接口进行适配，而C#,Java不支持多重继承。<br>2、对象适配器模式：采用组合的方式</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116458.html" target="_blank" rel="external">桥接模式</a>：将抽象部分与它的实现部分分离，使它们都可以独立的变化。而不会直接影响到其他部分。桥接模式解决了多层继承的结构，处理多维度变化的场景，将各个维度设计成独立的继承结构。使各个维度可以独立的扩展在抽象层建立联系。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116450.html" target="_blank" rel="external">装饰模式</a>：也叫装饰者模式或者装饰器模式，表示动态的给一个对象添加一些新的功能（利用子类继承父类也可以实现），但是比生成子类方式更灵活。例如：我们每个人身上穿的衣服，鞋子，领带，披风都可以理解为是对人的装饰。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116455.html" target="_blank" rel="external">组合模式</a>：将对象组合成树形结构以表示：部分–整体 的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。基本上见到的树形结构都使用到了组合模式。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116447.html" target="_blank" rel="external">外观模式</a>：为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口。这个接口使得这一子系统更加容易使用。遵守迪米特法则（最少知识原则）。说白了，就可以理解为封装。外观模式的核心：为子系统提供统一的入口，封装子系统的复杂性，便于客户端调用</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116445.html" target="_blank" rel="external">享元模式</a>：运用共享技术有效的支持大量细粒度对象的重用。它能做到共享的关键就是区分了内部状态（可以共享，不会随环境变化而变化）和外部状态（不可以共享，会随环境变化而变化）。如果项目中有很多完全相同或相似的对象，则可以使用享元模式，节省内存。</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116464.html" target="_blank" rel="external">代理模式</a>：为其他对象提供一种代理以便控制对这个对象的访问。可以详细控制访问某个类（对象）的方法，在调用这个方法前作的前置处理（统一的流程代码放到代理中处理）。调用这个方法后做后置处理。例如：明星的经纪人，租房的中介等等都是代理<br>代理模式分类：<br>1.静态代理（静态定义代理类，我们自己静态定义的代理类。比如我们自己定义一个明星的经纪人类）<br>2.动态代理（通过程序动态生成代理类，该代理类不是我们自己定义的。而是由程序自动生成）比较重要！！</p>
+</li>
+</ul>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li><p>大话设计模式(带目录完整版).pdf</p>
+</li>
+<li><p>HEAD_FIRST设计模式（中文版）.pdf</p>
+</li>
+<li><p>尚学堂_高淇<em>java300集最全视频教程</em>【GOF23设计模式】</p>
+</li>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116504.html" target="_blank" rel="external">FangZheng - 博客园</a></p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;##&lt;center&gt;java 23种设计模式概括&lt;/ceter&gt;&lt;/p&gt;
+&lt;h3 id=&quot;目录概览&quot;&gt;&lt;a href=&quot;#目录概览&quot; class=&quot;headerlink&quot; title=&quot;目录概览&quot;&gt;&lt;/a&gt;目录概览&lt;/h3&gt;&lt;h4 id=&quot;创建型模式：关注对象的创建过程&quot;&gt;&lt;a href=&quot;#创建型模式：关注对象的创建过程&quot; class=&quot;headerlink&quot; title=&quot;创建型模式：关注对象的创建过程&quot;&gt;&lt;/a&gt;创建型模式：关注对象的创建过程&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116398.html&quot;&gt;单例模式&lt;/a&gt;：保证一个类只有一个实例，并且提供一个访问该实例的全局访问点&lt;br&gt;主要：&lt;br&gt;饿汉式（线程安全，调用效率高，但是不能延时加载）&lt;br&gt;懒汉式（线程安全，调用效率不高，但是可以延时加载）&lt;br&gt;其他：&lt;br&gt;双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）&lt;br&gt;静态内部类式（线程安全，调用效率高。但是可以延时加载）&lt;br&gt;枚举单例（线程安全，调用效率高，不能延时加载）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116400.html&quot;&gt;工厂模式&lt;/a&gt;：&lt;br&gt;简单工厂模式：用来生产同一等级结构中的任意产品（对已有产品新增功能，需要修改源代码）&lt;br&gt;虽然能通过工厂来创建对象，但是违反了开闭原则。一旦增加功能需要在原有基础上修改代码。&lt;br&gt;工厂方法模式：用来生产同一等级结构中的固定产品（支持增加任意产品，不用修改源代码）&lt;br&gt;将工厂类调整为工厂接口，需要什么类型的工厂就使用该类实现该工厂，创建相应的产品。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116400.html&quot;&gt;抽象工厂模式&lt;/a&gt;：用来生产不同产品族的全部产品（对于增加新的产品，无能为力。可增加一系列的产品族）抽象工厂模式用来生产不同产品族的全部产品，对于只增加产品某一部分则不适用。抽象工厂模式是工厂模式的一种升级版本。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116401.html&quot;&gt;建造者​模式&lt;/a&gt;：分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象。&lt;br&gt;假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://ymjava.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>并发包总结（二）</title>
+    <link href="http://ymjava.cn/archives/3699126a.html"/>
+    <id>http://ymjava.cn/archives/3699126a.html</id>
+    <published>2018-02-23T09:03:02.000Z</published>
+    <updated>2018-02-24T03:10:47.890Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="java-util-concurrent-包-java并发编程包（二）"><a href="#java-util-concurrent-包-java并发编程包（二）" class="headerlink" title="java.util.concurrent 包 java并发编程包（二）"></a><center>java.util.concurrent 包 java并发编程包（二）</center></h2><h3 id="阻塞队列（BlockingQueue）-系列用法"><a href="#阻塞队列（BlockingQueue）-系列用法" class="headerlink" title="阻塞队列（BlockingQueue）  系列用法"></a>阻塞队列（BlockingQueue）  系列用法</h3><p>BlockingQueue 通常用于一个线程生产对象，而另外一个线程消费这些对象的场景。下图是对这个原理的阐述：<br><img src="http://img.blog.csdn.net/20150302184203260?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVmb25kcw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="blockingQueue.png"></p>
+<p>一个往线程里边放，另外一个线程从里边取的一个BlockingQueue。</p>
+<p>一个线程将会持续生产新对象并将其插入到队列之中，直到队列达到它所能容纳的临界点。也就是说，它是有限的。如果该阻塞队列到达了其临界点，负责生产的线程将会在往里边插入新对象时发生阻塞。它会一直处于阻塞之中，直到负责消费的线程从队列中拿走一个对象。<br>负责消费的线程将会一直从该阻塞队列中拿出对象。如果消费线程尝试去从一个空的队列中提取对象的话，这个消费线程将会处于阻塞之中，直到一个生产线程把一个对象丢进队列。</p>
+<h4 id="BlockingQueue-的方法"><a href="#BlockingQueue-的方法" class="headerlink" title="BlockingQueue 的方法"></a>BlockingQueue 的方法</h4><p> BlockingQueue 具有 4 组不同的方法用于插入、移除以及对队列中的元素进行检查。如果请求的操作不能得到立即执行的话，每个方法的表现也不同。这些方法如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">抛异常</th>
+<th style="text-align:center">特定值</th>
+<th style="text-align:center">阻塞</th>
+<th style="text-align:center">超时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>插入</td>
+<td style="text-align:center">add(o)</td>
+<td style="text-align:center">offer(o)</td>
+<td style="text-align:center">put(o)</td>
+<td style="text-align:center">offer(o,timeout,timeunit)</td>
+</tr>
+<tr>
+<td>移除</td>
+<td style="text-align:center">remove(o)</td>
+<td style="text-align:center">poll(o)</td>
+<td style="text-align:center">take(o)</td>
+<td style="text-align:center">poll(o,timeout,timeunit)</td>
+</tr>
+<tr>
+<td>检查</td>
+<td style="text-align:center">element(o)</td>
+<td style="text-align:center">peek(o)</td>
+</tr>
+</tbody>
+</table>
+<p>四组不同的行为方式解释：</p>
+<blockquote>
+<p>1.抛异常：如果试图的操作无法立即执行，抛一个异常。<br>2.特定值：如果试图的操作无法立即执行，返回一个特定的值(常常是 true / false)。<br>3.阻塞：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行。<br>4.超时：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行，但等待时间不会超过给定值。返回一个特定值以告知该操作是否成功(典型的是 true / false)。</p>
+</blockquote>
+<p>无法向一个 BlockingQueue 中插入 null。如果你试图插入 null，BlockingQueue 将会抛出一个 NullPointerException。可以访问到 BlockingQueue 中的所有元素，而不仅仅是开始和结束的元素。比如说，你将一个对象放入队列之中以等待处理，但你的应用想要将其取消掉。那么你可以调用诸如 remove(o) 方法来将队列之中的特定对象进行移除。但是这么干效率并不高(译者注：基于队列的数据结构，获取除开始或结束位置的其他对象的效率不会太高)，因此你尽量不要用这一类的方法，除非你确实不得不那么做。<br><a id="more"></a></p>
+<h4 id="BlockingQueue-的实现"><a href="#BlockingQueue-的实现" class="headerlink" title="BlockingQueue 的实现"></a>BlockingQueue 的实现</h4><p>BlockingQueue 是个接口，需要使用它的实现类之一来使用BlockingQueue.实现类有（this in java 6）:</p>
+<ul>
+<li><p>ArrayBlockingQueue</p>
+</li>
+<li><p>DelayQueue</p>
+</li>
+<li><p>LinkedBlockingQueue</p>
+</li>
+<li><p>PriorityBlockingQueue</p>
+</li>
+<li><p>SynchronousQueue</p>
+</li>
+</ul>
+<h4 id="java中使用BlockingQueue-的例子"><a href="#java中使用BlockingQueue-的例子" class="headerlink" title="java中使用BlockingQueue 的例子"></a>java中使用BlockingQueue 的例子</h4><p>这里是一个 Java 中使用 BlockingQueue 的示例。本示例使用的是 BlockingQueue 接口的 ArrayBlockingQueue 实现。<br>首先，BlockingQueueExample 类分别在两个独立的线程中启动了一个 Producer 和 一个 Consumer。Producer 向一个共享的 BlockingQueue 中注入字符串，而 Consumer 则会从中把它们拿出来。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlockingQueueExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        BlockingQueue queue = <span class="keyword">new</span> ArrayBlockingQueue(<span class="number">1024</span>);</div><div class="line"></div><div class="line">        Producer producer = <span class="keyword">new</span> Producer(queue);</div><div class="line">        Consumer consumer = <span class="keyword">new</span> Consumer(queue);</div><div class="line"></div><div class="line">        <span class="keyword">new</span> Thread(producer).start();</div><div class="line">        <span class="keyword">new</span> Thread(consumer).start();</div><div class="line"></div><div class="line">        Thread.sleep(<span class="number">4000</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以下是Producer 类。注意它在每次put()调用时是如何休眠一秒钟的。这将导致Consumer 在等待队列中对象的时候发生阻塞。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> BlockingQueue queue = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(BlockingQueue queue)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.queue = queue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            queue.put(<span class="string">"1"</span>);</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">            queue.put(<span class="string">"2"</span>);</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">            queue.put(<span class="string">"3"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以下是 Consumer 类。它只是把对象从队列中抽取出来，然后将它们打印到 System.out。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> BlockingQueue queue = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(BlockingQueue queue)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.queue = queue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.out.println(queue.take());</div><div class="line">            System.out.println(queue.take());</div><div class="line">            System.out.println(queue.take());</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="数组阻塞队列-ArrayBlockingQueue"><a href="#数组阻塞队列-ArrayBlockingQueue" class="headerlink" title="数组阻塞队列 ArrayBlockingQueue"></a>数组阻塞队列 ArrayBlockingQueue</h3><p>ArrayBlockingQueue 类实现了BlockingQueue 接口。<br>ArrayBlockingQueue 是一个有界的阻塞队列，其内部实现是将对象放到一个数组里。有界也就意味着，它不能够存储无限多数量的元素。它有一个同一时间能够存储元素数量的上限。你可以在对其进行初始化的时候设定这个上限，但之后就无法对这个上限进行修改了（ps:因为基于数组实现，具有数组的特性，一旦初始化，大小就无法修改）。<br>ArrayBlockingQueue 内部以FIFO（先进先出）的顺序对元素进行存储。队列中的头元素在所有元素之中是放入时间最久的那个，而尾部元素是最短的那个。<br>以下是在使用  ArrayBlockingQueue 的时候对其初始化的一个示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">BlockingQueue queue = <span class="keyword">new</span> ArrayBlockingQueue(<span class="number">1024</span>);</div><div class="line"></div><div class="line">queue.put(<span class="string">"1"</span>);</div><div class="line"></div><div class="line">Object object = queue.take();</div></pre></td></tr></table></figure>
+<p>以下是使用了 Java 泛型的一个 BlockingQueue 示例。注意其中是如何对 String 元素放入和提取的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">BlockingQueue&lt;String&gt; queue = <span class="keyword">new</span> ArrayBlockingQueue&lt;String&gt;(<span class="number">1024</span>);</div><div class="line"></div><div class="line">queue.put(<span class="string">"1"</span>);</div><div class="line"></div><div class="line">String string = queue.take();</div></pre></td></tr></table></figure>
+<h3 id="延迟队列-DelayQueue"><a href="#延迟队列-DelayQueue" class="headerlink" title="延迟队列 DelayQueue"></a>延迟队列 DelayQueue</h3><p>DelayQueue 实现了 BlockingQueue 接口。<br>DelayQueue 对元素进行持有直到一个特定的延迟到期。注入其中的元素必须实现 java.util.concurrent.Delayed 接口，该接口定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Delayed</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">Delayed</span>&lt; </span>&#123;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getDelay</span><span class="params">(TimeUnit timeUnit)</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>DelayQueue 将会在每个元素的 getDelay() 方法返回的值的时间段之后才释放掉该元素。如果返回的是 0 或者负值，延迟将被认为过期，该元素将会在 DelayQueue 的下一次 take  被调用的时候被释放掉。<br>传递给 getDelay 方法的 getDelay 实例是一个枚举类型，它表明了将要延迟的时间段。TimeUnit 枚举将会取以下值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DAYS</div><div class="line">HOURS</div><div class="line">MINUTES</div><div class="line">SECONDS</div><div class="line">MILLISECONDS</div><div class="line">MICROSECONDS</div><div class="line">NANOSECONDS</div></pre></td></tr></table></figure>
+<p>正如你所看到的，Delayed 接口也继承了 java.lang.Comparable 接口，这也就意味着 Delayed 对象之间可以进行对比。这个可能在对 DelayQueue 队列中的元素进行排序时有用，因此它们可以根据过期时间进行有序释放。<br>以下是使用 DelayQueue 的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DelayQueueExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        DelayQueue queue = <span class="keyword">new</span> DelayQueue();</div><div class="line"></div><div class="line">        Delayed element1 = <span class="keyword">new</span> DelayedElement();</div><div class="line"></div><div class="line">        queue.put(element1);</div><div class="line"></div><div class="line">        Delayed element2 = queue.take();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>DelayedElement 是我所创建的一个 DelayedElement 接口的实现类，它不在 java.util.concurrent 包里。你需要自行创建你自己的 Delayed 接口的实现以使用 DelayQueue 类。</p>
+<h3 id="链阻塞队列LinkedBlockingQueue"><a href="#链阻塞队列LinkedBlockingQueue" class="headerlink" title="链阻塞队列LinkedBlockingQueue"></a>链阻塞队列LinkedBlockingQueue</h3><p>LinkedBlockingQueue 类实现了BlockingQueue接口。<br>LinkedBlockingQueue 内部以一个链式结构(链接节点)对其元素进行存储。如果需要的话，这一链式结构可以选择一个上限。如果没有定义上限，将使用 Integer.MAX_VALUE 作为上限。<br>LinkedBlockingQueue 内部以 FIFO(先进先出)的顺序对元素进行存储。队列中的头元素在所有元素之中是放入时间最久的那个，而尾元素则是最短的那个。<br>以下是 LinkedBlockingQueue 的初始化和使用示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">BlockingQueue&lt;String&gt; unbounded = <span class="keyword">new</span> LinkedBlockingQueue&lt;String&gt;();</div><div class="line">BlockingQueue&lt;String&gt; bounded   = <span class="keyword">new</span> LinkedBlockingQueue&lt;String&gt;(<span class="number">1024</span>);</div><div class="line"></div><div class="line">bounded.put(<span class="string">"Value"</span>);</div><div class="line"></div><div class="line">String value = bounded.take();</div></pre></td></tr></table></figure>
+<h3 id="具有优先级的阻塞队列PriorityBlockingQueue"><a href="#具有优先级的阻塞队列PriorityBlockingQueue" class="headerlink" title="具有优先级的阻塞队列PriorityBlockingQueue"></a>具有优先级的阻塞队列PriorityBlockingQueue</h3><p>PriorityBlockingQueue 类实现了 BlockingQueue 接口。<br>PriorityBlockingQueue 是一个无界的并发队列。它使用了和类 java.util.PriorityQueue 一样的排序规则。你无法向这个队列中插入 null 值。<br>所有插入到 PriorityBlockingQueue 的元素必须实现 java.lang.Comparable 接口。因此该队列中元素的排序就取决于你自己的 Comparable 实现。<br>注意 PriorityBlockingQueue 对于具有相等优先级(compare() == 0)的元素并不强制任何特定行为。<br>同时注意，如果你从一个 PriorityBlockingQueue 获得一个 Iterator 的话，该 Iterator 并不能保证它对元素的遍历是以优先级为序的。<br>以下是使用 PriorityBlockingQueue 的示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">BlockingQueue queue   = <span class="keyword">new</span> PriorityBlockingQueue();</div><div class="line"></div><div class="line"><span class="comment">//String implements java.lang.Comparable</span></div><div class="line">queue.put(<span class="string">"Value"</span>);</div><div class="line"></div><div class="line">String value = queue.take();</div></pre></td></tr></table></figure>
+<h3 id="同步队列SynchronousQueue"><a href="#同步队列SynchronousQueue" class="headerlink" title="同步队列SynchronousQueue"></a>同步队列SynchronousQueue</h3><p>SynchronousQueue 类实现了 BlockingQueue 接口。<br>SynchronousQueue 是一个特殊的队列，它的内部同时只能够容纳单个元素。如果该队列已有一元素的话，试图向队列中插入一个新元素的线程将会阻塞，直到另一个线程将该元素从队列中抽走。同样，如果该队列为空，试图向队列中抽取一个元素的线程将会阻塞，直到另一个线程向队列中插入了一条新的元素。<br>据此，把这个类称作一个队列显然是夸大其词了。它更多像是一个汇合点。</p>
+<h3 id="阻塞双端队列-BlockingDeque"><a href="#阻塞双端队列-BlockingDeque" class="headerlink" title="阻塞双端队列 BlockingDeque"></a>阻塞双端队列 BlockingDeque</h3><p>java.util.concurrent 包里的 BlockingDeque 接口表示一个线程安放入和提取实例的双端队列。本小节我将给你演示如何使用 BlockingDeque。<br>BlockingDeque 类是一个双端队列，在不能够插入元素时，它将阻塞住试图插入元素的线程；在不能够抽取元素时，它将阻塞住试图抽取的线程。<br>deque(双端队列) 是 “Double Ended Queue” 的缩写。因此，双端队列是一个你可以从任意一端插入或者抽取元素的队列。</p>
+<p><img src="http://img.blog.csdn.net/20150303084557477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVmb25kcw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="BlockingDeque.png"></p>
+<p>一个 BlockingDeque - 线程在双端队列的两端都可以插入和提取元素。<br>一个线程生产元素，并把它们插入到队列的任意一端。如果双端队列已满，插入线程将被阻塞，直到一个移除线程从该队列中移出了一个元素。如果双端队列为空，移除线程将被阻塞，直到一个插入线程向该队列插入了一个新元素。</p>
+<p>BlockingDeque 的方法<br>BlockingDeque 具有 4 组不同的方法用于插入、移除以及对双端队列中的元素进行检查。如果请求的操作不能得到立即执行的话，每个方法的表现也不同。这些方法如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">抛异常</th>
+<th style="text-align:center">特定值</th>
+<th style="text-align:center">阻塞</th>
+<th style="text-align:center">超时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>插入</td>
+<td style="text-align:center">addFirst(o)</td>
+<td style="text-align:center">offerFirst(o)</td>
+<td style="text-align:center">putFirst(o)</td>
+<td style="text-align:center">offerFirst(o, timeout, timeunit)</td>
+</tr>
+<tr>
+<td>移除</td>
+<td style="text-align:center">removeFirst(o)</td>
+<td style="text-align:center">pollFirst(o)</td>
+<td style="text-align:center">takeFirst(o)</td>
+<td style="text-align:center">pollFirst(timeout, timeunit)</td>
+</tr>
+<tr>
+<td>检查</td>
+<td style="text-align:center">getFirst(o)</td>
+<td style="text-align:center">peekFirst(o)</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">抛异常</th>
+<th style="text-align:center">特定值</th>
+<th style="text-align:center">阻塞</th>
+<th style="text-align:center">超时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>插入</td>
+<td style="text-align:center">addLast(o)</td>
+<td style="text-align:center">offerLast(o)</td>
+<td style="text-align:center">putLast(o)</td>
+<td style="text-align:center">offerLast(o, timeout, timeunit)</td>
+</tr>
+<tr>
+<td>移除</td>
+<td style="text-align:center">removeLast(o)</td>
+<td style="text-align:center">pollLast(o)</td>
+<td style="text-align:center">takeLast(o)</td>
+<td style="text-align:center">pollLast(timeout, timeunit)</td>
+</tr>
+<tr>
+<td>检查</td>
+<td style="text-align:center">getLast(o)</td>
+<td style="text-align:center">peekLast(o)</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>四组不同的行为方式解释：</p>
+<blockquote>
+<p>1.抛异常：如果试图的操作无法立即执行，抛一个异常。<br>2.特定值：如果试图的操作无法立即执行，返回一个特定的值(常常是 true / false)。<br>3.阻塞：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行。<br>4.超时：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行，但等待时间不会超过给定值。返回一个特定值以告知该操作是否成功(典型的是 true / false)。</p>
+</blockquote>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/defonds/article/details/44021605/" target="_blank" rel="external">Java 并发工具包 java.util.concurrent 用户指南</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;java-util-concurrent-包-java并发编程包（二）&quot;&gt;&lt;a href=&quot;#java-util-concurrent-包-java并发编程包（二）&quot; class=&quot;headerlink&quot; title=&quot;java.util.concurrent 包 java并发编程包（二）&quot;&gt;&lt;/a&gt;&lt;center&gt;java.util.concurrent 包 java并发编程包（二）&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;阻塞队列（BlockingQueue）-系列用法&quot;&gt;&lt;a href=&quot;#阻塞队列（BlockingQueue）-系列用法&quot; class=&quot;headerlink&quot; title=&quot;阻塞队列（BlockingQueue）  系列用法&quot;&gt;&lt;/a&gt;阻塞队列（BlockingQueue）  系列用法&lt;/h3&gt;&lt;p&gt;BlockingQueue 通常用于一个线程生产对象，而另外一个线程消费这些对象的场景。下图是对这个原理的阐述：&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20150302184203260?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVmb25kcw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&quot; alt=&quot;blockingQueue.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;一个往线程里边放，另外一个线程从里边取的一个BlockingQueue。&lt;/p&gt;
+&lt;p&gt;一个线程将会持续生产新对象并将其插入到队列之中，直到队列达到它所能容纳的临界点。也就是说，它是有限的。如果该阻塞队列到达了其临界点，负责生产的线程将会在往里边插入新对象时发生阻塞。它会一直处于阻塞之中，直到负责消费的线程从队列中拿走一个对象。&lt;br&gt;负责消费的线程将会一直从该阻塞队列中拿出对象。如果消费线程尝试去从一个空的队列中提取对象的话，这个消费线程将会处于阻塞之中，直到一个生产线程把一个对象丢进队列。&lt;/p&gt;
+&lt;h4 id=&quot;BlockingQueue-的方法&quot;&gt;&lt;a href=&quot;#BlockingQueue-的方法&quot; class=&quot;headerlink&quot; title=&quot;BlockingQueue 的方法&quot;&gt;&lt;/a&gt;BlockingQueue 的方法&lt;/h4&gt;&lt;p&gt; BlockingQueue 具有 4 组不同的方法用于插入、移除以及对队列中的元素进行检查。如果请求的操作不能得到立即执行的话，每个方法的表现也不同。这些方法如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;抛异常&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;特定值&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;阻塞&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;超时&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;插入&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;add(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;offer(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;put(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;offer(o,timeout,timeunit)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;移除&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;remove(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;poll(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;take(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;poll(o,timeout,timeunit)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;检查&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;element(o)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;peek(o)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;四组不同的行为方式解释：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1.抛异常：如果试图的操作无法立即执行，抛一个异常。&lt;br&gt;2.特定值：如果试图的操作无法立即执行，返回一个特定的值(常常是 true / false)。&lt;br&gt;3.阻塞：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行。&lt;br&gt;4.超时：如果试图的操作无法立即执行，该方法调用将会发生阻塞，直到能够执行，但等待时间不会超过给定值。返回一个特定值以告知该操作是否成功(典型的是 true / false)。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;无法向一个 BlockingQueue 中插入 null。如果你试图插入 null，BlockingQueue 将会抛出一个 NullPointerException。可以访问到 BlockingQueue 中的所有元素，而不仅仅是开始和结束的元素。比如说，你将一个对象放入队列之中以等待处理，但你的应用想要将其取消掉。那么你可以调用诸如 remove(o) 方法来将队列之中的特定对象进行移除。但是这么干效率并不高(译者注：基于队列的数据结构，获取除开始或结束位置的其他对象的效率不会太高)，因此你尽量不要用这一类的方法，除非你确实不得不那么做。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://ymjava.cn/categories/java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>concurrent并发包总结</title>
+    <link href="http://ymjava.cn/archives/9880a961.html"/>
+    <id>http://ymjava.cn/archives/9880a961.html</id>
+    <published>2018-01-16T05:46:39.000Z</published>
+    <updated>2018-02-24T03:11:36.673Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="java-util-concurrent-包-java并发编程包（一）"><a href="#java-util-concurrent-包-java并发编程包（一）" class="headerlink" title="java.util.concurrent 包 java并发编程包（一）"></a><center>java.util.concurrent 包 java并发编程包（一）</center></h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>通常所说的concurrent包基本有3个package组成<br>java.util.concurrent：提供大部分关于并发的接口和类，如BlockingQueue,Callable,ConcurrentHashMap,ExecutorService, Semaphore等<br>java.util.concurrent.atomic：提供所有原子操作的类， 如AtomicInteger, AtomicLong等；<br>java.util.concurrent.locks:提供锁相关的类, 如Lock, ReentrantLock, ReadWriteLock, Condition等； </p>
+<p>concurrent包的优点：</p>
+<blockquote>
+<ol>
+<li>首先，功能非常丰富，诸如线程池(ThreadPoolExecutor)，CountDownLatch等并发编程中需要的类已经有现成的实现，不需要自己去实现一套； 毕竟jdk1.4对多线程编程的主要支持几乎就只有Thread, Runnable,synchronized等</li>
+<li>concurrent包里面的一些操作是基于硬件级别的CAS(compare and swap),就是在cpu级别提供了原子操作，简单的说就可以提供无阻塞、无锁定的算法； 而现代cpu大部分都是支持这样的算法的；</li>
+</ol>
+</blockquote>
+<h3 id="闭锁CountDownLatch"><a href="#闭锁CountDownLatch" class="headerlink" title="闭锁CountDownLatch"></a>闭锁CountDownLatch</h3><p>java.util.concurrent.CountDownLatch 是一个并发构造，它允许一个或多个线程等待一系列指定操作的完成。</p>
+<p>通常的使用场景是，某个主线程接到一个任务，起了n个子线程去完成，但是主线程需要等待这n个子线程都完成任务了以后才开始执行某个操作； </p>
+<p>演示代码</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demoCountDown</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> count = <span class="number">10</span>;</div><div class="line">    <span class="keyword">final</span> CountDownLatch l = <span class="keyword">new</span> CountDownLatch(count);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> index = i;</div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.currentThread().sleep(<span class="number">20</span> * <span class="number">1000</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line"></div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                System.out.println(<span class="string">"thread "</span> + index + <span class="string">" has finished..."</span>);</div><div class="line"></div><div class="line">                l.countDown();</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        l.await();</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    System.out.println(<span class="string">"now all threads have finished"</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只有当前面10个线程执行完成，最后一句话才会执行打印。（ps：10个线程执行顺序不定）<br><!--more--></p>
+<h3 id="Atomic类"><a href="#Atomic类" class="headerlink" title="Atomic类"></a>Atomic类</h3><p>Atomic相关的类，比如AtomicLong, AtomicInteger等这些；<br>简单的说，这些类都是线程安全的，支持无阻塞无锁定的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">set()</div><div class="line">get()</div><div class="line">getAndSet()</div><div class="line">getAndIncrement()</div><div class="line">getAndDecrement()</div><div class="line">getAndAdd()</div></pre></td></tr></table></figure>
+<p>等操作</p>
+<p>演示代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.hetaoblog.concurrent.test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicLong;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * by http://www.hetaoblog.com</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> hetaoblog</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAtomic</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> loopcount = <span class="number">10000</span>;</div><div class="line">        <span class="keyword">int</span> threadcount = <span class="number">10</span>;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> NonSafeSeq seq1 = <span class="keyword">new</span> NonSafeSeq();</div><div class="line">        <span class="keyword">final</span> SafeSeq seq2 = <span class="keyword">new</span> SafeSeq();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> CountDownLatch l = <span class="keyword">new</span> CountDownLatch(threadcount);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadcount; ++i) &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> index = i;</div><div class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; loopcount; ++j) &#123;</div><div class="line"></div><div class="line">                        seq1.inc();</div><div class="line">                        seq2.inc();</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    System.out.println(<span class="string">"finished : "</span> + index);</div><div class="line">                    l.countDown();</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;).start();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            l.await();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line"></div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"both have finished...."</span>);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"NonSafeSeq:"</span> + seq1.get());</div><div class="line">        System.out.println(<span class="string">"SafeSeq with atomic: "</span> + seq2.get());</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NonSafeSeq</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> count = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inc</span><span class="params">()</span> </span>&#123;</div><div class="line">        count++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SafeSeq</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> AtomicLong count = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inc</span><span class="params">()</span> </span>&#123;</div><div class="line">        count.incrementAndGet();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count.longValue();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中NonSafeSeq是作为对比的类，直接放一个private long count不是线程安全的，而SafeSeq里面放了一个AtomicLong,是线程安全的；可以直接调用incrementAndGet来增加</p>
+<p>运行代码，可以得到类似这样的结果<br>finished : 1<br>finished : 0<br>finished : 3<br>finished : 2<br>finished : 5<br>finished : 4<br>finished : 6<br>finished : 8<br>finished : 9<br>finished : 7<br>both have finished….<br>NonSafeSeq:91723<br>SafeSeq with atomic: 100000</p>
+<p>可以看到，10个线程，每个线程运行了10,000次，理论上应该有100,000次增加，使用了普通的long是非线程安全的，而使用了AtomicLong是线程安全的；</p>
+<p>注意，这个例子也说明，虽然long本身的单个设置是原子的，要么成功要么不成功，但是诸如count++这样的操作就不是线程安全的；因为这包括了读取和写入两步操作；</p>
+<h3 id="可以代替synchronized关键字的ReentrantLock"><a href="#可以代替synchronized关键字的ReentrantLock" class="headerlink" title="可以代替synchronized关键字的ReentrantLock"></a>可以代替synchronized关键字的ReentrantLock</h3><p>在jdk 1.4时代，线程间的同步主要依赖于synchronized关键字，本质上该关键字是一个对象锁，可以加在不同的instance上或者class上，从使用的角度则分别可以加在非静态方法，静态方法，以及直接synchronized(MyObject)这样的用法；<br>concurrent包提供了一个可以替代synchronized关键字的ReentrantLock，<br>简单的说你可以new一个ReentrantLock， 然后通过lock.lock和lock.unlock来获取锁和释放锁；注意必须将unlock放在finally块里面，<br>reentrantlock的好处</p>
+<ol>
+<li>是更好的性能，</li>
+<li>提供同一个lock对象上不同condition的信号通知</li>
+<li>还提供lockInterruptibly这样支持响应中断的加锁过程，意思是说你试图去加锁，但是当前锁被其他线程hold住，然后你这个线程可以被中断；</li>
+</ol>
+<p>演示代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.hetaoblog.concurrent.test;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantLockDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demoLock</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> loopcount = <span class="number">10000</span>;</div><div class="line">        <span class="keyword">int</span> threadcount = <span class="number">10</span>;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> SafeSeqWithLock seq = <span class="keyword">new</span> SafeSeqWithLock();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> CountDownLatch l = <span class="keyword">new</span> CountDownLatch(threadcount);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadcount; ++i) &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> index = i;</div><div class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; loopcount; ++j) &#123;</div><div class="line"></div><div class="line">                        seq.inc();</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    System.out.println(<span class="string">"finished : "</span> + index);</div><div class="line">                    l.countDown();</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;).start();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            l.await();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line"></div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"both have finished...."</span>);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"SafeSeqWithLock:"</span> + seq.get());</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SafeSeqWithLock</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> count = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inc</span><span class="params">()</span> </span>&#123;</div><div class="line">        lock.lock();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            count++;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同样以前面的类似Sequence的类举例，通过对inc操作加锁，保证了线程安全；<br>当然，这里get()我没有加锁，对于这样直接读取返回原子类型的函数，我认为不加锁是没问题的，相当于返回最近成功操作的值； </p>
+<p>运行结果类似这样，<br>finished : 7<br>finished : 2<br>finished : 6<br>finished : 1<br>finished : 5<br>finished : 3<br>finished : 0<br>finished : 9<br>finished : 8<br>finished : 4<br>both have finished….<br>SafeSeqWithLock:100000</p>
+<h3 id="读写锁ReadWriteLock"><a href="#读写锁ReadWriteLock" class="headerlink" title="读写锁ReadWriteLock"></a>读写锁ReadWriteLock</h3><p>concurrent包里面还提供了一个非常有用的锁，读写锁ReadWriteLock<br>下面是ReadWriteLock接口的说明：<br>A ReadWriteLock maintains a pair of associated locks, one for read-only operations and one for writing. The read lock may be held simultaneously by multiple reader threads, so long as there are no writers. The write lock is exclusive. </p>
+<p>意思是说读锁可以有很多个锁同时上锁，只要当前没有写锁；<br>写锁是排他的，上了写锁，其他线程既不能上读锁，也不能上写锁；同样，需要上写锁的前提是既没有读锁，也没有写锁；<br>两个写锁不能同时获得无需说明，下面一段程序说明下上了读锁以后，其他线程需要上写锁也无法获得</p>
+<p>演示代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.locks.Lock;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantReadWriteLock;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span>  LN</div><div class="line"> * <span class="doctag">@create</span> 2018-02-10 15:02</div><div class="line"> **/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">concurrentTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRWLock_getw_onr</span><span class="params">()</span></span>&#123;</div><div class="line">        ReentrantReadWriteLock lock = <span class="keyword">new</span> ReentrantReadWriteLock();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> Lock rlock = lock.readLock();</div><div class="line">        <span class="keyword">final</span> Lock wlock = lock.writeLock();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> CountDownLatch l = <span class="keyword">new</span> CountDownLatch(<span class="number">2</span>);</div><div class="line"></div><div class="line">        <span class="comment">//start r thread</span></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="keyword">new</span> Date() + <span class="string">"now to get rlock"</span>);</div><div class="line">                rlock.lock();</div><div class="line"></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.currentThread().sleep(<span class="number">20</span>*<span class="number">1000</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException ev) &#123;</div><div class="line">                    ev.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                System.out.println(<span class="keyword">new</span> Date() + <span class="string">"now to unlock rlock"</span>);</div><div class="line">                rlock.unlock();</div><div class="line"></div><div class="line">                l.countDown();</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line"></div><div class="line">        <span class="comment">//start w lock</span></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="keyword">new</span> Date() + <span class="string">"now to get wlock"</span>);</div><div class="line">                wlock.lock();</div><div class="line"></div><div class="line">                System.out.println(<span class="keyword">new</span> Date() + <span class="string">"now to unlock wlock"</span>);</div><div class="line">                wlock.unlock();</div><div class="line"></div><div class="line">                l.countDown();</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            l.await();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="keyword">new</span> Date() + <span class="string">"now to finished"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在试图获取写锁时，写锁线程必须等读锁线程将读锁释放了之后才可以获得写锁。</p>
+<p>结果：<br>Sat Feb 10 15:26:09 CST 2018now to get rlock<br>Sat Feb 10 15:26:09 CST 2018now to get wlock<br>Sat Feb 10 15:26:29 CST 2018now to unlock rlock<br>Sat Feb 10 15:26:29 CST 2018now to unlock wlock<br>Sat Feb 10 15:26:29 CST 2018now to finished</p>
+<p>ReadWriteLock的实现是ReentrantReadWriteLock，<br>有趣的是，在一个线程中，读锁不能直接升级为写锁，但是写锁可以降级为读锁；<br>这意思是，如果你已经有了读锁，再去试图获得写锁，将会无法获得， 一直堵住了；<br>但是如果你有了写锁，再去试图获得读锁，没问题；</p>
+<p>下面是一段降级的代码，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void testRWLock_downgrade()</div><div class="line">&#123;</div><div class="line">    ReentrantReadWriteLock lock = new ReentrantReadWriteLock();</div><div class="line"></div><div class="line">    Lock rlock = lock.readLock();</div><div class="line">    Lock wlock = lock.writeLock();</div><div class="line"></div><div class="line">    System.out.println("now to get wloc</div><div class="line">    k");</div><div class="line">    wlock.lock();</div><div class="line">    System.out.println("now to get rlock");</div><div class="line">    rlock.lock();</div><div class="line"></div><div class="line">    System.out.println("now to unlock wlock");</div><div class="line"></div><div class="line">    wlock.unlock();</div><div class="line"></div><div class="line">    System.out.println("now to unlock rlock");</div><div class="line">    rlock.unlock();</div><div class="line"></div><div class="line">    System.out.println("finished");</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><p><a href="http://www.iteye.com/topic/1121021" target="_blank" rel="external">说一说java的concurrent包-系列文章</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/defonds/article/details/44021605/" target="_blank" rel="external">Java 并发工具包 java.util.concurrent 用户指南</a></p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;java-util-concurrent-包-java并发编程包（一）&quot;&gt;&lt;a href=&quot;#java-util-concurrent-包-java并发编程包（一）&quot; class=&quot;headerlink&quot; title=&quot;java.util.concurrent 包 java并发编程包（一）&quot;&gt;&lt;/a&gt;&lt;center&gt;java.util.concurrent 包 java并发编程包（一）&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;1-简介&quot;&gt;&lt;a href=&quot;#1-简介&quot; class=&quot;headerlink&quot; title=&quot;1.简介&quot;&gt;&lt;/a&gt;1.简介&lt;/h3&gt;&lt;p&gt;通常所说的concurrent包基本有3个package组成&lt;br&gt;java.util.concurrent：提供大部分关于并发的接口和类，如BlockingQueue,Callable,ConcurrentHashMap,ExecutorService, Semaphore等&lt;br&gt;java.util.concurrent.atomic：提供所有原子操作的类， 如AtomicInteger, AtomicLong等；&lt;br&gt;java.util.concurrent.locks:提供锁相关的类, 如Lock, ReentrantLock, ReadWriteLock, Condition等； &lt;/p&gt;
+&lt;p&gt;concurrent包的优点：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;首先，功能非常丰富，诸如线程池(ThreadPoolExecutor)，CountDownLatch等并发编程中需要的类已经有现成的实现，不需要自己去实现一套； 毕竟jdk1.4对多线程编程的主要支持几乎就只有Thread, Runnable,synchronized等&lt;/li&gt;
+&lt;li&gt;concurrent包里面的一些操作是基于硬件级别的CAS(compare and swap),就是在cpu级别提供了原子操作，简单的说就可以提供无阻塞、无锁定的算法； 而现代cpu大部分都是支持这样的算法的；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;闭锁CountDownLatch&quot;&gt;&lt;a href=&quot;#闭锁CountDownLatch&quot; class=&quot;headerlink&quot; title=&quot;闭锁CountDownLatch&quot;&gt;&lt;/a&gt;闭锁CountDownLatch&lt;/h3&gt;&lt;p&gt;java.util.concurrent.CountDownLatch 是一个并发构造，它允许一个或多个线程等待一系列指定操作的完成。&lt;/p&gt;
+&lt;p&gt;通常的使用场景是，某个主线程接到一个任务，起了n个子线程去完成，但是主线程需要等待这n个子线程都完成任务了以后才开始执行某个操作； &lt;/p&gt;
+&lt;p&gt;演示代码&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://ymjava.cn/categories/java/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Docker 初识</title>
