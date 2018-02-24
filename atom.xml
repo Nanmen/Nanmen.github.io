@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2018-02-24T07:34:00.984Z</updated>
+  <updated>2018-02-24T07:35:26.829Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ymjava.cn/archives/5c9c5ce0.html"/>
     <id>http://ymjava.cn/archives/5c9c5ce0.html</id>
     <published>2018-02-24T03:06:09.000Z</published>
-    <updated>2018-02-24T07:34:00.984Z</updated>
+    <updated>2018-02-24T07:35:26.829Z</updated>
     
     <content type="html"><![CDATA[<p>##<center>java 23种设计模式概括</center></p>
 <h3 id="目录概览"><a href="#目录概览" class="headerlink" title="目录概览"></a>目录概览</h3><h4 id="创建型模式：关注对象的创建过程"><a href="#创建型模式：关注对象的创建过程" class="headerlink" title="创建型模式：关注对象的创建过程"></a>创建型模式：关注对象的创建过程</h4><ul>
@@ -112,7 +112,7 @@
     <link href="http://ymjava.cn/archives/3699126a.html"/>
     <id>http://ymjava.cn/archives/3699126a.html</id>
     <published>2018-02-23T09:03:02.000Z</published>
-    <updated>2018-02-24T03:10:47.890Z</updated>
+    <updated>2018-02-24T07:35:26.827Z</updated>
     
     <content type="html"><![CDATA[<h2 id="java-util-concurrent-包-java并发编程包（二）"><a href="#java-util-concurrent-包-java并发编程包（二）" class="headerlink" title="java.util.concurrent 包 java并发编程包（二）"></a><center>java.util.concurrent 包 java并发编程包（二）</center></h2><h3 id="阻塞队列（BlockingQueue）-系列用法"><a href="#阻塞队列（BlockingQueue）-系列用法" class="headerlink" title="阻塞队列（BlockingQueue）  系列用法"></a>阻塞队列（BlockingQueue）  系列用法</h3><p>BlockingQueue 通常用于一个线程生产对象，而另外一个线程消费这些对象的场景。下图是对这个原理的阐述：<br><img src="http://img.blog.csdn.net/20150302184203260?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVmb25kcw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="blockingQueue.png"></p>
 <p>一个往线程里边放，另外一个线程从里边取的一个BlockingQueue。</p>
@@ -326,7 +326,7 @@
     <link href="http://ymjava.cn/archives/9880a961.html"/>
     <id>http://ymjava.cn/archives/9880a961.html</id>
     <published>2018-01-16T05:46:39.000Z</published>
-    <updated>2018-02-24T03:11:36.673Z</updated>
+    <updated>2018-02-24T07:35:26.828Z</updated>
     
     <content type="html"><![CDATA[<h2 id="java-util-concurrent-包-java并发编程包（一）"><a href="#java-util-concurrent-包-java并发编程包（一）" class="headerlink" title="java.util.concurrent 包 java并发编程包（一）"></a><center>java.util.concurrent 包 java并发编程包（一）</center></h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>通常所说的concurrent包基本有3个package组成<br>java.util.concurrent：提供大部分关于并发的接口和类，如BlockingQueue,Callable,ConcurrentHashMap,ExecutorService, Semaphore等<br>java.util.concurrent.atomic：提供所有原子操作的类， 如AtomicInteger, AtomicLong等；<br>java.util.concurrent.locks:提供锁相关的类, 如Lock, ReentrantLock, ReadWriteLock, Condition等； </p>
 <p>concurrent包的优点：</p>
