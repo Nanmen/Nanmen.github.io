@@ -4,8 +4,26 @@
 
     
   <url>
+    <loc>http://ymjava.cn/archives/62414ee6.html</loc>
+    <lastmod>2018-02-25T07:09:56.412Z</lastmod>
+    <data>
+        <display>
+        <title>JVM垃圾回收算法及回收器详解</title>
+        <pubTime>2018-02-25T06:37:20.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="java" url="http://ymjava.cn/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://ymjava.cn/archives/5c9c5ce0.html</loc>
-    <lastmod>2018-02-24T07:41:56.015Z</lastmod>
+    <lastmod>2018-02-25T07:09:46.914Z</lastmod>
     <data>
         <display>
         <title>java23种设计模式概括</title>

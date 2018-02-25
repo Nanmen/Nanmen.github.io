@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2018-02-24T07:41:56.015Z</updated>
+  <updated>2018-02-25T07:09:56.412Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -16,27 +16,127 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JVM垃圾回收算法及回收器详解</title>
+    <link href="http://ymjava.cn/archives/62414ee6.html"/>
+    <id>http://ymjava.cn/archives/62414ee6.html</id>
+    <published>2018-02-25T06:37:20.000Z</published>
+    <updated>2018-02-25T07:09:56.412Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="JVM垃圾回收算法及回收器详解"><a href="#JVM垃圾回收算法及回收器详解" class="headerlink" title="JVM垃圾回收算法及回收器详解"></a><center>JVM垃圾回收算法及回收器详解</center></h2><h3 id="GC-Roots"><a href="#GC-Roots" class="headerlink" title="GC Roots"></a>GC Roots</h3><p>我们先来了解一下在Java中是如何判断一个对象的生死的，有些语言比如Python是采用引用计数来统计的，但是这种做法可能会遇见循环引用的问题，在Java以及C#等语言中是采用GC Roots来解决这个问题。如果一个对象和GC Roots之间没有链接，那么这个对象也可以被视作是一个可回收的对象。</p>
+<p>Java中可以被作为GC Roots中的对象有：</p>
+<p>虚拟机栈中的引用的对象。<br>方法区中的类静态属性引用的对象。<br>方法区中的常量引用的对象。<br>本地方法栈（jni）即一般说的Native的引用对象。</p>
+<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><h4 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h4><p>标记-清除算法将垃圾回收分为两个阶段：标记阶段和清除阶段。在标记阶段首先通过根节点，标记所有从根节点开始的对象，未被标记的对象就是未被引用的垃圾对象。然后，在清除阶段，清除所有未被标记的对象。标记清除算法带来的一个问题是会存在大量的<strong>空间碎片</strong>，因为回收后的空间是不连续的，这样给大对象分配内存的时候可能会提前触发full gc。</p>
+<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><p>将现有的内存空间分为两快，<strong>每次只使用其中一块，在垃圾回收时将正在使用的内存中的存活对象复制到未被使用的内存块中，之后，清除正在使用的内存块中的所有对象，交换两个内存的角色，完成垃圾回收</strong>。</p>
+<p>现在的商业虚拟机都采用这种收集算法来回收新生代，IBM研究表明新生代中的对象98%是朝夕生死的，所以并不需要按照1:1的比例划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中的一块Survivor。当回收时，将Eden和Survivor中还存活着的对象一次性地拷贝到另外一个Survivor空间上，最后清理掉Eden和刚才用过的Survivor的空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8:1(可以通过-SurvivorRattio来配置)，也就是每次新生代中可用内存空间为整个新生代容量的90%，只有10%的内存会被“浪费”。当然，98%的对象可回收只是一般场景下的数据，我们没有办法保证回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保。</p>
+<h4 id="标记整理"><a href="#标记整理" class="headerlink" title="标记整理"></a>标记整理</h4><p>复制算法的高效性是建立在存活对象少、垃圾对象多的前提下的。这种情况在新生代经常发生，但是在老年代更常见的情况是大部分对象都是存活对象。如果依然使用复制算法，由于存活的对象较多，复制的成本也将很高。<br>标记-压缩算法是一种<strong>老年代的回收算法</strong>，它在标记-清除算法的基础上做了一些优化。首先也需要从根节点开始对所有可达对象做一次标记，但之后，它并不简单地清理未标记的对象，而是<strong>将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间</strong>。这种方法既避免了碎片的产生，又不需要两块相同的内存空间，因此，其性价比比较高。<br><a id="more"></a></p>
+<h4 id="增量算法"><a href="#增量算法" class="headerlink" title="增量算法"></a>增量算法</h4><p>增量算法的基本思想是，如果一次性将所有的垃圾进行处理，需要造成系统长时间的停顿，那么就可以让垃圾收集线程和应用程序线程交替执行。每次，垃圾收集线程只收集一小片区域的内存空间，接着切换到应用程序线程。依次反复，直到垃圾收集完成。使用这种方式，由于在垃圾回收过程中，间断性地还执行了应用程序代码，所以能减少系统的停顿时间。但是，因为线程切换和上下文转换的消耗，会使得垃圾回收的总体成本上升，造成系统吞吐量的下降。</p>
+<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>Serial收集器是<strong>最古老的收集器</strong>，它的缺点是当<strong>Serial收集器想进行垃圾回收的时候，必须暂停用户的所有进程，即stop the world</strong>。到现在为止，它依然是虚拟机运行在client模式下的默认新生代收集器，与其他收集器相比，对于限定在单个CPU的运行环境来说，Serial收集器由于没有线程交互的开销，专心做垃圾回收自然可以获得最高的单线程收集效率。</p>
+<p><strong>Serial Old是Serial收集器的老年代版本，它同样是一个单线程收集器，使用”标记－整理“算法</strong>。这个收集器的主要意义也是被Client模式下的虚拟机使用。在Server模式下，它主要还有两大用途：一个是在JDK1.5及以前的版本中与Parallel Scanvenge收集器搭配使用，另外一个就是作为CMS收集器的后备预案，在并发收集发生Concurrent Mode Failure的时候使用。</p>
+<p>通过指定-UseSerialGC参数，使用Serial + Serial Old的串行收集器组合进行内存回收。</p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器是Serial收集器新生代的多线程实现，注意在进行垃圾回收的时候依然会stop the world，只是相比较Serial收集器而言它会运行多条进程进行垃圾回收。</p>
+<p>ParNew收集器在单CPU的环境中绝对不会有比Serial收集器更好的效果，甚至由于存在线程交互的开销，该收集器在通过超线程技术实现的两个CPU的环境中都不能百分之百的保证能超越Serial收集器。当然，随着可以使用的CPU的数量增加，它对于GC时系统资源的利用还是很有好处的。它默认开启的收集线程数与CPU的数量相同，在CPU非常多（譬如32个，现在CPU动辄4核加超线程，服务器超过32个逻辑CPU的情况越来越多了）的环境下，可以使用-XX:ParallelGCThreads参数来限制垃圾收集的线程数。</p>
+<p>-UseParNewGC: 打开此开关后，使用ParNew + Serial Old的收集器组合进行内存回收，这样<strong>新生代使用并行收集器，老年代使用串行收集器</strong>。</p>
+<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>Parallel是采用复制算法的多线程新生代垃圾回收器，似乎和ParNew收集器有很多的相似的地方。但是Parallel Scanvenge收集器的一个特点是它所关注的目标是吞吐量(Throughput)。所谓吞吐量就是CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量=运行用户代码时间 / (运行用户代码时间 + 垃圾收集时间)。停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能够提升用户的体验；而高吞吐量则可以最高效率地利用CPU时间，尽快地完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。</p>
+<p>Parallel Old收集器是Parallel Scavenge收集器的老年代版本，采用多线程和”标记－整理”算法。这个收集器是在jdk1.6中才开始提供的，在此之前，新生代的Parallel Scavenge收集器一直处于比较尴尬的状态。原因是如果新生代Parallel Scavenge收集器，那么老年代除了Serial Old(PS MarkSweep)收集器外别无选择。由于单线程的老年代Serial Old收集器在服务端应用性能上的”拖累“，即使使用了Parallel Scavenge收集器也未必能在整体应用上获得吞吐量最大化的效果，又因为老年代收集中无法充分利用服务器多CPU的处理能力，在老年代很大而且硬件比较高级的环境中，这种组合的吞吐量甚至还不一定有ParNew加CMS的组合”给力“。直到Parallel Old收集器出现后，”吞吐量优先“收集器终于有了比较名副其实的应用祝贺，在注重吞吐量及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge加Parallel Old收集器。</p>
+<p>-UseParallelGC: 虚拟机运行在Server模式下的默认值，打开此开关后，使用Parallel Scavenge + Serial Old的收集器组合进行内存回收。-UseParallelOldGC: 打开此开关后，使用Parallel Scavenge + Parallel Old的收集器组合进行垃圾回收</p>
+<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>CMS(Concurrent Mark Swep)收集器是一个比较重要的回收器，现在应用非常广泛，我们重点来看一下，CMS一种获取最短回收停顿时间为目标的收集器，这使得它很适合用于和用户交互的业务。从名字(Mark Swep)就可以看出，CMS收集器是基于标记清除算法实现的。它的收集过程分为四个步骤：</p>
+<p>1.初始标记(initial mark)<br>2.并发标记(concurrent mark)<br>3.重新标记(remark)<br>4.并发清除(concurrent sweep)<br>注意初始标记和重新标记还是会stop the world，但是在耗费时间更长的并发标记和并发清除两个阶段都可以和用户进程同时工作。</p>
+<p>不过由于CMS收集器是基于标记清除算法实现的，会导致有大量的空间碎片产生，在为大对象分配内存的时候，往往会出现老年代还有很大的空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前开启一次Full GC。为了解决这个问题，CMS收集器默认提供了一个-XX:+UseCMSCompactAtFullCollection收集开关参数（默认就是开启的)，用于在CMS收集器进行FullGC完开启内存碎片的合并整理过程，内存整理的过程是无法并发的，这样内存碎片问题倒是没有了，不过停顿时间不得不变长。虚拟机设计者还提供了另外一个参数-XX:CMSFullGCsBeforeCompaction参数用于设置执行多少次不压缩的FULL GC后跟着来一次带压缩的（默认值为0，表示每次进入Full GC时都进行碎片整理）。</p>
+<p>不幸的是，它作为老年代的收集器，却无法与jdk1.4中已经存在的新生代收集器Parallel Scavenge配合工作，所以在jdk1.5中使用cms来收集老年代的时候，新生代只能选择ParNew或Serial收集器中的一个。ParNew收集器是使用-XX:+UseConcMarkSweepGC选项启用CMS收集器之后的默认新生代收集器，也可以使用-XX:+UseParNewGC选项来强制指定它。</p>
+<p>由于CMS收集器现在比较常用，下面我们再额外了解一下CMS算法的几个常用参数：</p>
+<p>UseCMSInitatingOccupancyOnly：表示只在到达阈值的时候，才进行 CMS 回收。<br>为了减少第二次暂停的时间，通过-XX:+CMSParallelRemarkEnabled开启并行remark。如果ramark时间还是过长的话，可以开启-XX:+CMSScavengeBeforeRemark选项，强制remark之前开启一次minor gc，减少remark的暂停时间，但是在remark之后也立即开始一次minor gc。<br>CMS默认启动的回收线程数目是(ParallelGCThreads + 3)/4，如果你需要明确设定，可以通过-XX:+ParallelCMSThreads来设定，其中-XX:+ParallelGCThreads代表的年轻代的并发收集线程数目。<br>CMSClassUnloadingEnabled： 允许对类元数据进行回收。<br>CMSInitatingPermOccupancyFraction：当永久区占用率达到这一百分比后，启动 CMS 回收 (前提是-XX:+CMSClassUnloadingEnabled 激活了)。<br>CMSIncrementalMode：使用增量模式，比较适合单 CPU。<br>UseCMSCompactAtFullCollection参数可以使 CMS 在垃圾收集完成后，进行一次内存碎片整理。内存碎片的整理并不是并发进行的。<br>UseFullGCsBeforeCompaction：设定进行多少次 CMS 垃圾回收后，进行一次内存压缩。<br>一些建议<br>对于Native Memory:</p>
+<ul>
+<li>使用了NIO或者NIO框架（Mina/Netty）</li>
+<li>使用了DirectByteBuffer分配字节缓冲区</li>
+<li>使用了MappedByteBuffer做内存映射</li>
+</ul>
+<p>由于Native Memory只能通过FullGC回收，所以除非你非常清楚这时真的有必要，否则不要轻易调用System.gc()。</p>
+<p>另外为了防止某些框架中的System.gc调用（例如NIO框架、Java RMI），建议在启动参数中加上-XX:+DisableExplicitGC来禁用显式GC。这个参数有个巨大的坑，如果你禁用了System.gc()，那么上面的3种场景下的内存就无法回收，可能造成OOM，如果你使用了CMS GC，那么可以用这个参数替代：-XX:+ExplicitGCInvokesConcurrent。</p>
+<p>此外除了CMS的GC，其实其他针对old gen的回收器都会在对old gen回收的同时回收young gen。</p>
+<h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>G1收集器是一款面向服务端应用的垃圾收集器。HotSpot团队赋予它的使命是在未来替换掉JDK1.5中发布的CMS收集器。与其他GC收集器相比，G1具备如下特点：</p>
+<p>1.并行与并发：G1能更充分的利用CPU，多核环境下的硬件优势来缩短stop the world的停顿时间。<br>2.分代收集：和其他收集器一样，分代的概念在G1中依然存在，不过G1不需要其他的垃圾回收器的配合就可以独自管理整个GC堆。<br>3.空间整合：G1收集器有利于程序长时间运行，分配大对象时不会无法得到连续的空间而提前触发一次GC。<br>4.可预测的非停顿：这是G1相对于CMS的另一大优势，降低停顿时间是G1和CMS共同的关注点，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒。<br>在使用G1收集器时，Java堆的内存布局和其他收集器有很大的差别，它将这个Java堆分为多个大小相等的独立区域，虽然还保留新生代和老年代的概念，但是新生代和老年代不再是物理隔离的了，它们都是一部分Region（不需要连续）的集合。</p>
+<p>虽然G1看起来有很多优点，实际上CMS还是主流。</p>
+<h4 id="与GC相关的常用参数"><a href="#与GC相关的常用参数" class="headerlink" title="与GC相关的常用参数"></a>与GC相关的常用参数</h4><p>除了上面提及的一些参数，下面补充一些和GC相关的常用参数：</p>
+<ul>
+<li>-Xmx: 设置堆内存的最大值。</li>
+<li>-Xms: 设置堆内存的初始值。</li>
+<li>-Xmn: 设置新生代的大小。</li>
+<li>-Xss: 设置栈的大小。</li>
+<li>-PretenureSizeThreshold: 直接晋升到老年代的对象大小，设置这个参数后，大于这个参数的对象将直接在老年代分配。</li>
+<li>-MaxTenuringThrehold: 晋升到老年代的对象年龄。每个对象在坚持过一次Minor GC之后，年龄就会加1，当超过这个参数值时就进入老年代。</li>
+<li>-UseAdaptiveSizePolicy: 在这种模式下，新生代的大小、eden 和 survivor 的比例、晋升老年代的对象年龄等参数会被自动调整，以达到在堆大小、吞吐量和停顿时间之间的平衡点。在手工调优比较困难的场合，可以直接使用这种自适应的方式，仅指定虚拟机的最大堆、目标的吞吐量 (GCTimeRatio) 和停顿时间 (MaxGCPauseMills)，让虚拟机自己完成调优工作。</li>
+<li>-SurvivorRattio: 新生代Eden区域与Survivor区域的容量比值，默认为8，代表Eden: Suvivor= 8: 1。</li>
+<li>-XX:ParallelGCThreads：设置用于垃圾回收的线程数。通常情况下可以和 CPU 数量相等。但在 CPU 数量比较多的情况下，设置相对较小的数值也是合理的。</li>
+<li>-XX:MaxGCPauseMills：设置最大垃圾收集停顿时间。它的值是一个大于 0 的整数。收集器在工作时，会调整 Java 堆大小或者其他一些参数，尽可能地把停顿时间控制在 MaxGCPauseMills 以内。</li>
+<li>-XX:GCTimeRatio:设置吞吐量大小，它的值是一个 0-100 之间的整数。假设 GCTimeRatio 的值为 n，那么系统将花费不超过 1/(1+n) 的时间用于垃圾收集。</li>
+</ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
+<li><p><a href="http://www.importnew.com/23752.html" target="_blank" rel="external">JVM（3）：Java GC算法 垃圾收集器</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/23186.html" target="_blank" rel="external">JVM初探——使用堆外内存减少Full GC</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/23146.html" target="_blank" rel="external">JVM GC参数以及GC算法的应用</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/22996.html" target="_blank" rel="external">JVM内存管理–GC算法精解（五分钟让你彻底明白标记/清除算法）</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/22886.html" target="_blank" rel="external">JVM 调优 —— GC 长时间停顿问题及解决方法</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/16327.html" target="_blank" rel="external">JVM 优化经验总结</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/11336.html" target="_blank" rel="external">高吞吐低延迟Java应用的垃圾回收优化</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/10910.html" target="_blank" rel="external">Linux HotSopt虚拟机GC线程的CPU占用率</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/10570.html" target="_blank" rel="external">如何估算内存消耗</a></p>
+</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><p>原文出处： <a href="https://www.ziwenxie.site/2017/07/24/java-jvm-gc/" target="_blank" rel="external">ZIWENXIE</a></p>
+</li>
+<li><p><a href="http://www.importnew.com/26383.html" target="_blank" rel="external">JVM 垃圾回收算法及回收器详解</a></p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;JVM垃圾回收算法及回收器详解&quot;&gt;&lt;a href=&quot;#JVM垃圾回收算法及回收器详解&quot; class=&quot;headerlink&quot; title=&quot;JVM垃圾回收算法及回收器详解&quot;&gt;&lt;/a&gt;&lt;center&gt;JVM垃圾回收算法及回收器详解&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;GC-Roots&quot;&gt;&lt;a href=&quot;#GC-Roots&quot; class=&quot;headerlink&quot; title=&quot;GC Roots&quot;&gt;&lt;/a&gt;GC Roots&lt;/h3&gt;&lt;p&gt;我们先来了解一下在Java中是如何判断一个对象的生死的，有些语言比如Python是采用引用计数来统计的，但是这种做法可能会遇见循环引用的问题，在Java以及C#等语言中是采用GC Roots来解决这个问题。如果一个对象和GC Roots之间没有链接，那么这个对象也可以被视作是一个可回收的对象。&lt;/p&gt;
+&lt;p&gt;Java中可以被作为GC Roots中的对象有：&lt;/p&gt;
+&lt;p&gt;虚拟机栈中的引用的对象。&lt;br&gt;方法区中的类静态属性引用的对象。&lt;br&gt;方法区中的常量引用的对象。&lt;br&gt;本地方法栈（jni）即一般说的Native的引用对象。&lt;/p&gt;
+&lt;h3 id=&quot;垃圾回收算法&quot;&gt;&lt;a href=&quot;#垃圾回收算法&quot; class=&quot;headerlink&quot; title=&quot;垃圾回收算法&quot;&gt;&lt;/a&gt;垃圾回收算法&lt;/h3&gt;&lt;h4 id=&quot;标记清除&quot;&gt;&lt;a href=&quot;#标记清除&quot; class=&quot;headerlink&quot; title=&quot;标记清除&quot;&gt;&lt;/a&gt;标记清除&lt;/h4&gt;&lt;p&gt;标记-清除算法将垃圾回收分为两个阶段：标记阶段和清除阶段。在标记阶段首先通过根节点，标记所有从根节点开始的对象，未被标记的对象就是未被引用的垃圾对象。然后，在清除阶段，清除所有未被标记的对象。标记清除算法带来的一个问题是会存在大量的&lt;strong&gt;空间碎片&lt;/strong&gt;，因为回收后的空间是不连续的，这样给大对象分配内存的时候可能会提前触发full gc。&lt;/p&gt;
+&lt;h4 id=&quot;复制算法&quot;&gt;&lt;a href=&quot;#复制算法&quot; class=&quot;headerlink&quot; title=&quot;复制算法&quot;&gt;&lt;/a&gt;复制算法&lt;/h4&gt;&lt;p&gt;将现有的内存空间分为两快，&lt;strong&gt;每次只使用其中一块，在垃圾回收时将正在使用的内存中的存活对象复制到未被使用的内存块中，之后，清除正在使用的内存块中的所有对象，交换两个内存的角色，完成垃圾回收&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;现在的商业虚拟机都采用这种收集算法来回收新生代，IBM研究表明新生代中的对象98%是朝夕生死的，所以并不需要按照1:1的比例划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中的一块Survivor。当回收时，将Eden和Survivor中还存活着的对象一次性地拷贝到另外一个Survivor空间上，最后清理掉Eden和刚才用过的Survivor的空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8:1(可以通过-SurvivorRattio来配置)，也就是每次新生代中可用内存空间为整个新生代容量的90%，只有10%的内存会被“浪费”。当然，98%的对象可回收只是一般场景下的数据，我们没有办法保证回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保。&lt;/p&gt;
+&lt;h4 id=&quot;标记整理&quot;&gt;&lt;a href=&quot;#标记整理&quot; class=&quot;headerlink&quot; title=&quot;标记整理&quot;&gt;&lt;/a&gt;标记整理&lt;/h4&gt;&lt;p&gt;复制算法的高效性是建立在存活对象少、垃圾对象多的前提下的。这种情况在新生代经常发生，但是在老年代更常见的情况是大部分对象都是存活对象。如果依然使用复制算法，由于存活的对象较多，复制的成本也将很高。&lt;br&gt;标记-压缩算法是一种&lt;strong&gt;老年代的回收算法&lt;/strong&gt;，它在标记-清除算法的基础上做了一些优化。首先也需要从根节点开始对所有可达对象做一次标记，但之后，它并不简单地清理未标记的对象，而是&lt;strong&gt;将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间&lt;/strong&gt;。这种方法既避免了碎片的产生，又不需要两块相同的内存空间，因此，其性价比比较高。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://ymjava.cn/categories/java/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>java23种设计模式概括</title>
     <link href="http://ymjava.cn/archives/5c9c5ce0.html"/>
     <id>http://ymjava.cn/archives/5c9c5ce0.html</id>
     <published>2018-02-24T03:06:09.000Z</published>
-    <updated>2018-02-24T07:41:56.015Z</updated>
+    <updated>2018-02-25T07:09:46.914Z</updated>
     
     <content type="html"><![CDATA[<h2 id="java-23种设计模式概括"><a href="#java-23种设计模式概括" class="headerlink" title="java 23种设计模式概括"></a><center>java 23种设计模式概括</center></h2><h3 id="目录概览"><a href="#目录概览" class="headerlink" title="目录概览"></a>目录概览</h3><h4 id="创建型模式：关注对象的创建过程"><a href="#创建型模式：关注对象的创建过程" class="headerlink" title="创建型模式：关注对象的创建过程"></a>创建型模式：关注对象的创建过程</h4><ul>
-<li><p><a href="http://www.cnblogs.com/meet/p/5116398.html" target="_blank" rel="external">单例模式</a>：保证一个类只有一个实例，并且提供一个访问该实例的全局访问点<br>主要：<br>饿汉式（线程安全，调用效率高，但是不能延时加载）<br>懒汉式（线程安全，调用效率不高，但是可以延时加载）<br>其他：<br>双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）<br>静态内部类式（线程安全，调用效率高。但是可以延时加载）<br>枚举单例（线程安全，调用效率高，不能延时加载）</p>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116398.html" target="_blank" rel="external">单例模式</a>：<strong>保证一个类只有一个实例，并且提供一个访问该实例的全局访问点</strong><br>主要：<br>饿汉式（线程安全，调用效率高，但是不能延时加载）<br>懒汉式（线程安全，调用效率不高，但是可以延时加载）<br>其他：<br>双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）<br>静态内部类式（线程安全，调用效率高。但是可以延时加载）<br>枚举单例（线程安全，调用效率高，不能延时加载）</p>
 </li>
 <li><p><a href="http://www.cnblogs.com/meet/p/5116400.html" target="_blank" rel="external">工厂模式</a>：<br>简单工厂模式：用来生产同一等级结构中的任意产品（对已有产品新增功能，需要修改源代码）<br>虽然能通过工厂来创建对象，但是违反了开闭原则。一旦增加功能需要在原有基础上修改代码。<br>工厂方法模式：用来生产同一等级结构中的固定产品（支持增加任意产品，不用修改源代码）<br>将工厂类调整为工厂接口，需要什么类型的工厂就使用该类实现该工厂，创建相应的产品。</p>
 </li>
 <li><p><a href="http://www.cnblogs.com/meet/p/5116400.html" target="_blank" rel="external">抽象工厂模式</a>：用来生产不同产品族的全部产品（对于增加新的产品，无能为力。可增加一系列的产品族）抽象工厂模式用来生产不同产品族的全部产品，对于只增加产品某一部分则不适用。抽象工厂模式是工厂模式的一种升级版本。</p>
 </li>
-<li><p><a href="http://www.cnblogs.com/meet/p/5116401.html" target="_blank" rel="external">建造者​模式</a>：分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象。<br>假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。</p>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116401.html" target="_blank" rel="external">建造者​模式</a>：<strong>分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象</strong>。<br>假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。</p>
 <a id="more"></a>
 </li>
 <li><p><a href="http://www.cnblogs.com/meet/p/5116404.html" target="_blank" rel="external">原型模式</a>：通过new产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式。<br>所谓原型模式就是构建一个对象的原型，通过原型来创建出新的对象。</p>
 </li>
 </ul>
 <h4 id="行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。"><a href="#行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。" class="headerlink" title="行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。"></a>行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。</h4><ul>
-<li><p><a href="http://www.cnblogs.com/meet/p/5116417.html" target="_blank" rel="external">模板方法模式</a>：定义一个操作中的算法骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的<br>某些特定步骤。也就是说：假如某些操作代码基本相同，只是其中一部分会经常改变，则可以使用模板方法，将不变的部分作为一个模板，将容易变动的部分让子类来实现。</p>
+<li><p><a href="http://www.cnblogs.com/meet/p/5116417.html" target="_blank" rel="external">模板方法模式</a>：<strong>定义一个操作中的算法骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的<br>某些特定步骤</strong>。也就是说：假如某些操作代码基本相同，只是其中一部分会经常改变，则可以使用模板方法，将不变的部分作为一个模板，将容易变动的部分让子类来实现。</p>
 </li>
 <li><p><a href="http://www.cnblogs.com/meet/p/5116430.html" target="_blank" rel="external">命令模式</a>（不常用）：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化，对请求排队或记录请求日志。以及支持可撤销的操作。说白了，就是将一系列的请求命令封装起来，不直接调用真正执行者的方法，这样比较好扩展。</p>
 </li>
@@ -90,13 +190,13 @@
     <summary type="html">
     
       &lt;h2 id=&quot;java-23种设计模式概括&quot;&gt;&lt;a href=&quot;#java-23种设计模式概括&quot; class=&quot;headerlink&quot; title=&quot;java 23种设计模式概括&quot;&gt;&lt;/a&gt;&lt;center&gt;java 23种设计模式概括&lt;/ceter&gt;&lt;/h2&gt;&lt;h3 id=&quot;目录概览&quot;&gt;&lt;a href=&quot;#目录概览&quot; class=&quot;headerlink&quot; title=&quot;目录概览&quot;&gt;&lt;/a&gt;目录概览&lt;/h3&gt;&lt;h4 id=&quot;创建型模式：关注对象的创建过程&quot;&gt;&lt;a href=&quot;#创建型模式：关注对象的创建过程&quot; class=&quot;headerlink&quot; title=&quot;创建型模式：关注对象的创建过程&quot;&gt;&lt;/a&gt;创建型模式：关注对象的创建过程&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116398.html&quot;&gt;单例模式&lt;/a&gt;：保证一个类只有一个实例，并且提供一个访问该实例的全局访问点&lt;br&gt;主要：&lt;br&gt;饿汉式（线程安全，调用效率高，但是不能延时加载）&lt;br&gt;懒汉式（线程安全，调用效率不高，但是可以延时加载）&lt;br&gt;其他：&lt;br&gt;双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）&lt;br&gt;静态内部类式（线程安全，调用效率高。但是可以延时加载）&lt;br&gt;枚举单例（线程安全，调用效率高，不能延时加载）&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116398.html&quot;&gt;单例模式&lt;/a&gt;：&lt;strong&gt;保证一个类只有一个实例，并且提供一个访问该实例的全局访问点&lt;/strong&gt;&lt;br&gt;主要：&lt;br&gt;饿汉式（线程安全，调用效率高，但是不能延时加载）&lt;br&gt;懒汉式（线程安全，调用效率不高，但是可以延时加载）&lt;br&gt;其他：&lt;br&gt;双重检测锁式（由于JVM底层内部模型原因，偶尔会出问题。不建议使用）&lt;br&gt;静态内部类式（线程安全，调用效率高。但是可以延时加载）&lt;br&gt;枚举单例（线程安全，调用效率高，不能延时加载）&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116400.html&quot;&gt;工厂模式&lt;/a&gt;：&lt;br&gt;简单工厂模式：用来生产同一等级结构中的任意产品（对已有产品新增功能，需要修改源代码）&lt;br&gt;虽然能通过工厂来创建对象，但是违反了开闭原则。一旦增加功能需要在原有基础上修改代码。&lt;br&gt;工厂方法模式：用来生产同一等级结构中的固定产品（支持增加任意产品，不用修改源代码）&lt;br&gt;将工厂类调整为工厂接口，需要什么类型的工厂就使用该类实现该工厂，创建相应的产品。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116400.html&quot;&gt;抽象工厂模式&lt;/a&gt;：用来生产不同产品族的全部产品（对于增加新的产品，无能为力。可增加一系列的产品族）抽象工厂模式用来生产不同产品族的全部产品，对于只增加产品某一部分则不适用。抽象工厂模式是工厂模式的一种升级版本。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116401.html&quot;&gt;建造者​模式&lt;/a&gt;：分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象。&lt;br&gt;假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/meet/p/5116401.html&quot;&gt;建造者​模式&lt;/a&gt;：&lt;strong&gt;分离了对象子组件的单独构造（由Builder来负责构建，由Director来负责组装），从而可以构造出复杂的对象&lt;/strong&gt;。&lt;br&gt;假如一个对象的构建很复杂，需要很多步骤。如果使用了建造者模式，会将其构建对象，和组装成一个对象这两步给分开来构建部分为（builder）和组织部分（director），实现了构建和装配的解耦。&lt;/p&gt;
     
     </summary>
     
