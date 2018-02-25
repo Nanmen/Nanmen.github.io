@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2018-02-25T07:09:56.412Z</updated>
+  <updated>2018-02-25T07:19:07.855Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -16,11 +16,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>博客更新步骤</title>
+    <link href="http://ymjava.cn/archives/aeaaf0d9.html"/>
+    <id>http://ymjava.cn/archives/aeaaf0d9.html</id>
+    <published>2018-02-25T07:14:47.000Z</published>
+    <updated>2018-02-25T07:19:07.855Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="博客更新步骤"><a href="#博客更新步骤" class="headerlink" title="博客更新步骤"></a><center>博客更新步骤</center></h2><h3 id="如题。"><a href="#如题。" class="headerlink" title="如题。"></a>如题。</h3><p>为了偷个懒，做个笔记</p>
+<blockquote>
+<ul>
+<li>exec ssh-agent bash</li>
+<li>eval ssh-agent -s</li>
+<li>ssh-add “C:\Users\LN.ssh\id_rsa”</li>
+<li>git add .</li>
+<li>git commit -m ‘update _post’</li>
+<li>git push origin</li>
+<li>hexo g -d</li>
+</ul>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;博客更新步骤&quot;&gt;&lt;a href=&quot;#博客更新步骤&quot; class=&quot;headerlink&quot; title=&quot;博客更新步骤&quot;&gt;&lt;/a&gt;&lt;center&gt;博客更新步骤&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;如题。&quot;&gt;&lt;a href=&quot;#如题。&quot; class=&quot;heade
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://ymjava.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>JVM垃圾回收算法及回收器详解</title>
     <link href="http://ymjava.cn/archives/62414ee6.html"/>
     <id>http://ymjava.cn/archives/62414ee6.html</id>
     <published>2018-02-25T06:37:20.000Z</published>
-    <updated>2018-02-25T07:09:56.412Z</updated>
+    <updated>2018-02-25T07:14:12.605Z</updated>
     
     <content type="html"><![CDATA[<h2 id="JVM垃圾回收算法及回收器详解"><a href="#JVM垃圾回收算法及回收器详解" class="headerlink" title="JVM垃圾回收算法及回收器详解"></a><center>JVM垃圾回收算法及回收器详解</center></h2><h3 id="GC-Roots"><a href="#GC-Roots" class="headerlink" title="GC Roots"></a>GC Roots</h3><p>我们先来了解一下在Java中是如何判断一个对象的生死的，有些语言比如Python是采用引用计数来统计的，但是这种做法可能会遇见循环引用的问题，在Java以及C#等语言中是采用GC Roots来解决这个问题。如果一个对象和GC Roots之间没有链接，那么这个对象也可以被视作是一个可回收的对象。</p>
 <p>Java中可以被作为GC Roots中的对象有：</p>
