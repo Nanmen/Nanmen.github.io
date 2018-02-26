@@ -120,7 +120,7 @@
 <meta property="og:description" content="这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。
 也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。
 第一个坑 travis 找不指定文件">
-<meta property="og:updated_time" content="2017-11-01T09:32:36.729Z">
+<meta property="og:updated_time" content="2018-02-26T02:09:46.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="travis部署Hexo之填坑日记">
 <meta name="twitter:description" content="这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。
@@ -438,12 +438,12 @@
       
         <p>这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。</p>
 <p>也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。</p>
-<h3 id="第一个坑-travis-找不指定文件"><a href="#第一个坑-travis-找不指定文件" class="headerlink" title="第一个坑 travis 找不指定文件"></a>第一个坑 travis 找不指定文件</h3><a id="more"></a> 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> 博客项目文件夹根目录</div><div class="line">$ touch .travis.yml</div></pre></td></tr></table></figure>
+<h3 id="第一个坑-travis-找不指定文件"><a href="#第一个坑-travis-找不指定文件" class="headerlink" title="第一个坑 travis 找不指定文件"></a>第一个坑 travis 找不指定文件</h3><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ <span class="built_in">cd</span> 博客项目文件夹根目录</div><div class="line">$ touch .travis.yml</div></pre></td></tr></table></figure>
 <ul>
-<li>登录 travis<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div><div class="line">`</div></pre></td></tr></table></figure>
-</li>
+<li>登录 travis</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div><div class="line">`</div></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这里的 REPO_TOKEN 是变量名,在后面的配置文件中会用到</span></div><div class="line"><span class="comment"># TOKEN 是上面github生成的Token</span></div><div class="line">travis encrypt <span class="string">'REPO_TOKEN=&lt;TOKEN&gt;'</span> --add</div></pre></td></tr></table></figure>
 <p>这在很多讲解Travis部署Hexo的教程中都有的步骤，那么问题就出现了。。。。</p>
 <ul>
@@ -474,7 +474,7 @@
   <p><span>本文标题:</span><a href="/archives/a8653e18.html">travis部署Hexo之填坑日记</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 南风 的个人博客">南风</a></p>
   <p><span>发布时间:</span>2017年02月17日 - 16:02</p>
-  <p><span>最后更新:</span>2017年11月01日 - 17:11</p>
+  <p><span>最后更新:</span>2018年02月26日 - 10:02</p>
   <p><span>原始链接:</span><a href="/archives/a8653e18.html" title="travis部署Hexo之填坑日记">http://ymjava.cn/archives/a8653e18.html</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://ymjava.cn/archives/a8653e18.html"  aria-label="复制成功！"></i></span>
   </p>
@@ -655,7 +655,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
