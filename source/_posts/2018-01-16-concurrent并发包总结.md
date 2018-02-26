@@ -1,6 +1,8 @@
 ---
 title: concurrent并发包总结
 categories: java
+tags:
+  - concurrent并发包
 comments: false
 copyright: true
 top: 10

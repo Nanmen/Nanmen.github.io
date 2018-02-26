@@ -1,6 +1,8 @@
 ---
 title: 记推送失败——git命令之ssh-add学习
 categories: 随笔
+tags:
+  - hexo
 comments: false
 copyright: true
 top: 10
