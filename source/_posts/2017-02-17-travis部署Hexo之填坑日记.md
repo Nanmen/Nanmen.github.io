@@ -11,17 +11,19 @@ copyright: true
 
 这个小客栈总算是被我搭起来了，前前后后遇到了不少坑。果然每一次在网上学东西都是遇坑填坑的过程，不过这都是为了我们更好的成（zhuang）长(bi)嘛。
 
-
 也就不重复的讲其他教程里有的内容了，只简明的记录下，我的填坑过程。
 
 ### 第一个坑 travis 找不指定文件
-<!--more--> 
+<!--more-->
+
 ``` bash
+
 $ cd 博客项目文件夹根目录
 $ touch .travis.yml
 ```
 
 * 登录 travis
+
 ``` bash
 travis login --auto
 ````
@@ -31,6 +33,7 @@ travis login --auto
 # TOKEN 是上面github生成的Token
 travis encrypt 'REPO_TOKEN=<TOKEN>' --add
 ```
+
 这在很多讲解Travis部署Hexo的教程中都有的步骤，那么问题就出现了。。。。
 
 * travis 找不到指定文件
