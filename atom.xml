@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ymjava.cn/"/>
-  <updated>2018-03-01T05:50:04.167Z</updated>
+  <updated>2018-03-05T03:43:08.508Z</updated>
   <id>http://ymjava.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ymjava.cn/archives/5e98de26.html"/>
     <id>http://ymjava.cn/archives/5e98de26.html</id>
     <published>2018-03-01T02:39:22.000Z</published>
-    <updated>2018-03-01T05:50:04.167Z</updated>
+    <updated>2018-03-05T03:43:08.508Z</updated>
     
     <content type="html"><![CDATA[<h2 id="18书单和学习计划"><a href="#18书单和学习计划" class="headerlink" title="18书单和学习计划"></a><center>18书单和学习计划</center></h2><h3 id="书单"><a href="#书单" class="headerlink" title="书单"></a>书单</h3><ul>
 <li>《Java编程思想》<br>&nbsp;&nbsp;<blockquote>
@@ -30,11 +30,13 @@
 </ul>
 <hr>
 <ul>
-<li><p>《effective java》<br>&nbsp;&nbsp;</p>
-<blockquote>
+<li>《effective java》<br>&nbsp;&nbsp;<blockquote>
 <p>养成良好代码习惯，改善编码能力</p>
 </blockquote>
 </li>
+</ul>
+<a id="more"></a>
+<ul>
 <li><p>《java8实战》<br>&nbsp;&nbsp;</p>
 <blockquote>
 <p>熟悉和掌握java8中新特性以及lambda表达式等</p>
@@ -63,7 +65,19 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;18书单和学习计划&quot;&gt;&lt;a href=&quot;#18书单和学习计划&quot; class=&quot;headerlink&quot; title=&quot;18书单和学习计划&quot;&gt;&lt;/a&gt;&lt;center&gt;18书单和学习计划&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;书单&quot;&gt;&lt;a href=&quot;#书单&quot; cl
+      &lt;h2 id=&quot;18书单和学习计划&quot;&gt;&lt;a href=&quot;#18书单和学习计划&quot; class=&quot;headerlink&quot; title=&quot;18书单和学习计划&quot;&gt;&lt;/a&gt;&lt;center&gt;18书单和学习计划&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=&quot;书单&quot;&gt;&lt;a href=&quot;#书单&quot; class=&quot;headerlink&quot; title=&quot;书单&quot;&gt;&lt;/a&gt;书单&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;《Java编程思想》&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;blockquote&gt;
+&lt;p&gt;深刻理解java中的基础核心思想。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;《effective java》&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;blockquote&gt;
+&lt;p&gt;养成良好代码习惯，改善编码能力&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
