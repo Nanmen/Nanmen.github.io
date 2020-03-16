@@ -12,5 +12,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: http://ymjava.cn/sitemap.xml
-Sitemap: http://ymjava.cn/baidusitemap.xml
+Sitemap: http://020228.xyz/sitemap.xml
+Sitemap: http://020228.xyz/baidusitemap.xml

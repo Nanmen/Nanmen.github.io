@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 # URL
 # :year/:month/:day/:title/
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://ymjava.cn
+url: http://020228.xyz
 root: /
 permalink: archives/:abbrlink.html
 permalink_defaults:
